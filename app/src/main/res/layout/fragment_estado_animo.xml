@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.fragments.EstadoAnimoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Cómo te sientes hoy?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <RadioGroup
+            android:id="@+id/rgEstadoAnimo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/rbMuyFeliz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="😄 Muy Feliz"
+                android:textSize="16sp"
+                android:padding="12dp" />
+
+            <RadioButton
+                android:id="@+id/rbFeliz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🙂 Feliz"
+                android:textSize="16sp"
+                android:padding="12dp" />
+
+            <RadioButton
+                android:id="@+id/rbNeutral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="😐 Neutral"
+                android:textSize="16sp"
+                android:padding="12dp" />
+
+            <RadioButton
+                android:id="@+id/rbTriste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="😔 Triste"
+                android:textSize="16sp"
+                android:padding="12dp" />
+
+            <RadioButton
+                android:id="@+id/rbMuyTriste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="😢 Muy Triste"
+                android:textSize="16sp"
+                android:padding="12dp" />
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nota (opcional)"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:maxLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGuardarEstadoAnimo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Estado de Ánimo" />
+
+        <TextView
+            android:id="@+id/tvEstadoAnimoActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+

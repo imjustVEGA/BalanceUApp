@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.example.balanceuapp.ui.fragments.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_habitos"
+        android:name="com.example.balanceuapp.ui.fragments.HabitosFragment"
+        android:label="Hábitos"
+        tools:layout="@layout/fragment_habitos" />
+
+    <fragment
+        android:id="@+id/nav_estado_animo"
+        android:name="com.example.balanceuapp.ui.fragments.EstadoAnimoFragment"
+        android:label="Estado de Ánimo"
+        tools:layout="@layout/fragment_estado_animo" />
+
+    <fragment
+        android:id="@+id/nav_estadisticas"
+        android:name="com.example.balanceuapp.ui.fragments.EstadisticasFragment"
+        android:label="Estadísticas"
+        tools:layout="@layout/fragment_estadisticas" />
+
+</navigation>
+

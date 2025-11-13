@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925773306179",
+    "project_id": "balanceu-e76cd",
+    "storage_bucket": "balanceu-e76cd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925773306179:android:d860a5eb2ed7c0a83337f6",
+        "android_client_info": {
+          "package_name": "com.example.balanceuapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9xx8-Uotzj2lvcEj_IcqEouHc9Ux6pj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
