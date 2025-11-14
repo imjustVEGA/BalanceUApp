@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@color/background_soft"
+    android:padding="20dp"
+    android:fillViewport="true"
     tools:context=".ui.fragments.EstadoAnimoFragment">
 
     <LinearLayout
@@ -16,9 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¿Cómo te sientes hoy?"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="28dp" />
 
         <RadioGroup
             android:id="@+id/rgEstadoAnimo"
@@ -73,7 +76,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nota (opcional)"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="24dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNota"
@@ -87,19 +94,34 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGuardarEstadoAnimo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar Estado de Ánimo" />
+            android:layout_height="56dp"
+            android:text="Guardar Estado de Ánimo"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp" />
 
-        <TextView
-            android:id="@+id/tvEstadoAnimoActual"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEstadoAnimoActual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp"
             android:layout_marginTop="24dp"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:visibility="gone" />
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/accent_sage"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvEstadoAnimoActual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:padding="16dp" />
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

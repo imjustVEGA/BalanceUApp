@@ -47,7 +47,7 @@ class EstadoAnimoFragment : Fragment() {
     private fun setupObservers() {
         estadoAnimoViewModel.estadoAnimoActual.observe(viewLifecycleOwner) { estado ->
             if (estado != null) {
-                binding.tvEstadoAnimoActual.visibility = View.VISIBLE
+                binding.cardEstadoAnimoActual.visibility = View.VISIBLE
                 binding.tvEstadoAnimoActual.text = "Estado actual: ${estado.tipo.name}\n${if (estado.nota.isNotEmpty()) "Nota: ${estado.nota}" else ""}"
                 
                 // Seleccionar el radio button correspondiente
@@ -60,7 +60,7 @@ class EstadoAnimoFragment : Fragment() {
                 }
                 binding.etNota.setText(estado.nota)
             } else {
-                binding.tvEstadoAnimoActual.visibility = View.GONE
+                binding.cardEstadoAnimoActual.visibility = View.GONE
             }
         }
 

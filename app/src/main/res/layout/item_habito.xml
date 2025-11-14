@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/background_white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,8 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del hábito"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/tvDescripcionHabito"
@@ -40,17 +44,18 @@
                 android:layout_height="wrap_content"
                 android:text="Descripción"
                 android:textSize="14sp"
-                android:textColor="?android:attr/textColorSecondary"
-                android:layout_marginTop="4dp" />
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="6dp" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnEliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Eliminar" />
+            android:contentDescription="Eliminar"
+            app:tint="@color/error_soft" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

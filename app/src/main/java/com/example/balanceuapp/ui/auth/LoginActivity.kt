@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.iniciarSesion(email, password)
         }
 
-        binding.tvRegisterLink.setOnClickListener {
+        binding.btnRegisterLink.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }

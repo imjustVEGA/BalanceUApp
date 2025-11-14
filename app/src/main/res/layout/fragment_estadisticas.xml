@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@color/background_soft"
+    android:padding="20dp"
+    android:fillViewport="true"
     tools:context=".ui.fragments.EstadisticasFragment">
 
     <LinearLayout
@@ -15,9 +17,11 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/background_white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,9 +33,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Progreso de Hábitos"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="20dp" />
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChartHabitos"
@@ -43,8 +48,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/background_white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,9 +63,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estados de Ánimo"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="20dp" />
 
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barChartEstadosAnimo"

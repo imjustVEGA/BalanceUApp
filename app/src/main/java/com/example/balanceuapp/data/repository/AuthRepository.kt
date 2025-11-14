@@ -32,17 +32,17 @@ class AuthRepository {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
             val userId = result.user?.uid ?: return Result.failure(Exception("Error al obtener ID de usuario"))
             
-            val usuario = Usuario(
-                id = userId,
-                email = email,
-                nombre = nombre,
-                fechaRegistro = System.currentTimeMillis()
-            )
+            // val usuario = Usuario(
+            //     id = userId,
+            //     email = email,
+            //     nombre = nombre,
+            //     fechaRegistro = System.currentTimeMillis()
+            // )
             
-            firestore.collection("usuarios")
-                .document(userId)
-                .set(usuario.toMap())
-                .await()
+            // firestore.collection("usuarios")
+            //     .document(userId)
+            //     .set(usuario.toMap())
+            //     .await()
             
             Result.success(userId)
         } catch (e: Exception) {
