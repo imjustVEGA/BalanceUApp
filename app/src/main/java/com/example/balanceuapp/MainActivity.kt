@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.balanceuapp.databinding.ActivityMainBinding
-import com.example.balanceuapp.ui.auth.LoginActivity
+import com.example.balanceuapp.ui.auth.AuthActivity
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
             // Verificar si el usuario está autenticado
             if (!authViewModel.verificarSesion()) {
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, AuthActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_logout -> {
                 authViewModel.cerrarSesion()
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, AuthActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()

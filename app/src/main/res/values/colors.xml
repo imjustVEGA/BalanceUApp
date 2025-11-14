@@ -40,4 +40,7 @@
     <color name="mood_neutral">#90A4AE</color>
     <color name="mood_sad">#FFB74D</color>
     <color name="mood_very_sad">#E57373</color>
+    
+    <!-- Bottom Navigation -->
+    <color name="bottom_nav_item_color">@color/primary_green</color>
 </resources>

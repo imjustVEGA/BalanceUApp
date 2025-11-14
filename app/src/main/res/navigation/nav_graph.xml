@@ -12,22 +12,27 @@
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
-        android:id="@+id/nav_habitos"
-        android:name="com.example.balanceuapp.ui.fragments.HabitosFragment"
-        android:label="Hábitos"
-        tools:layout="@layout/fragment_habitos" />
+        android:id="@+id/nav_habitos_estadisticas"
+        android:name="com.example.balanceuapp.ui.fragments.HabitosEstadisticasFragment"
+        android:label="Hábitos y Estadísticas"
+        tools:layout="@layout/fragment_habitos_estadisticas" />
 
     <fragment
-        android:id="@+id/nav_estado_animo"
-        android:name="com.example.balanceuapp.ui.fragments.EstadoAnimoFragment"
-        android:label="Estado de Ánimo"
-        tools:layout="@layout/fragment_estado_animo" />
+        android:id="@+id/nav_salud_fisica"
+        android:name="com.example.balanceuapp.ui.fragments.SaludFisicaFragment"
+        android:label="Salud Física"
+        tools:layout="@layout/fragment_salud_fisica" />
 
     <fragment
-        android:id="@+id/nav_estadisticas"
-        android:name="com.example.balanceuapp.ui.fragments.EstadisticasFragment"
-        android:label="Estadísticas"
-        tools:layout="@layout/fragment_estadisticas" />
+        android:id="@+id/nav_salud_mental"
+        android:name="com.example.balanceuapp.ui.fragments.SaludMentalFragment"
+        android:label="Salud Mental"
+        tools:layout="@layout/fragment_salud_mental" />
+
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.example.balanceuapp.ui.fragments.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
 
 </navigation>
-

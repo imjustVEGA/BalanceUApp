@@ -5,16 +5,11 @@
         android:icon="@android:drawable/ic_menu_view"
         android:title="Inicio" />
     <item
-        android:id="@+id/nav_habitos"
+        android:id="@+id/nav_habitos_estadisticas"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="Hábitos" />
     <item
-        android:id="@+id/nav_estado_animo"
+        android:id="@+id/nav_perfil"
         android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="Estado de Ánimo" />
-    <item
-        android:id="@+id/nav_estadisticas"
-        android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="Estadísticas" />
+        android:title="Perfil" />
 </menu>
-
