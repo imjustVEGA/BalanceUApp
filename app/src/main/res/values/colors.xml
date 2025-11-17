@@ -6,19 +6,20 @@
     
     <!-- Paleta de Salud y Calma -->
     <!-- Verde Salvia (Salud) - Color Primario -->
-    <color name="primary_green">#7FB069</color>
-    <color name="primary_green_light">#A5D6A7</color>
-    <color name="primary_green_dark">#66BB6A</color>
+    <color name="primary_green">#48A9A6</color>
+    <color name="primary_green_light">#6BC4C1</color>
+    <color name="primary_green_dark">#3A8B88</color>
     
     <!-- Azul Calmante (Calma) - Color Secundario -->
-    <color name="secondary_teal">#26A69A</color>
-    <color name="secondary_teal_light">#80CBC4</color>
-    <color name="secondary_teal_dark">#00897B</color>
+    <color name="secondary_teal">#48A9A6</color>
+    <color name="secondary_teal_light">#6BC4C1</color>
+    <color name="secondary_teal_dark">#3A8B88</color>
     
     <!-- Colores de fondo suaves -->
-    <color name="background_soft">#FAFAFA</color>
+    <color name="background_soft">#F5F5F5</color>
     <color name="background_white">#FFFFFF</color>
     <color name="surface_light">#F5F5F5</color>
+    <color name="background_dark">#112117</color>
     
     <!-- Colores de texto -->
     <color name="text_primary">#212121</color>

@@ -13,7 +13,9 @@ class AuthRepository {
             instance
         } catch (e: Exception) {
             android.util.Log.e("AuthRepository", "Error al inicializar FirebaseAuth: ${e.message}", e)
-            throw IllegalStateException("Firebase no está configurado correctamente. Verifica que google-services.json sea válido.", e)
+            e.printStackTrace()
+            // No lanzar excepción, retornar instancia si está disponible
+            FirebaseAuth.getInstance()
         }
     }
     private val firestore: FirebaseFirestore by lazy {
@@ -23,7 +25,9 @@ class AuthRepository {
             instance
         } catch (e: Exception) {
             android.util.Log.e("AuthRepository", "Error al inicializar Firestore: ${e.message}", e)
-            throw IllegalStateException("Firebase no está configurado correctamente. Verifica que google-services.json sea válido.", e)
+            e.printStackTrace()
+            // No lanzar excepción, retornar instancia si está disponible
+            FirebaseFirestore.getInstance()
         }
     }
 

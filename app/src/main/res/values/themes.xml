@@ -17,6 +17,7 @@
         <item name="colorOnBackground">@color/text_primary</item>
         <item name="colorSurface">@color/background_white</item>
         <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/background_dark</item>
         
         <!-- Error color -->
         <item name="colorError">@color/error_soft</item>

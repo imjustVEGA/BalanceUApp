@@ -82,9 +82,14 @@ class EstadisticasFragment : Fragment() {
             }
 
             val dataSet = PieDataSet(entries, "Hábitos")
-            dataSet.colors = listOf(Color.GREEN, Color.RED, Color.GRAY)
+            // Colores pastel suaves
+            dataSet.colors = listOf(
+                Color.parseColor("#A5D6A7"), // Verde pastel
+                Color.parseColor("#FFB74D"), // Naranja pastel
+                Color.parseColor("#BDBDBD")  // Gris pastel
+            )
             dataSet.valueTextSize = 12f
-            dataSet.valueTextColor = Color.WHITE
+            dataSet.valueTextColor = Color.parseColor("#424242")
 
             val pieData = PieData(dataSet)
             binding.pieChartHabitos.data = pieData
@@ -102,11 +107,11 @@ class EstadisticasFragment : Fragment() {
 
             val entries = mutableListOf<BarEntry>()
             val tipos = listOf(
-                TipoEstadoAnimo.MUY_FELIZ,
+                TipoEstadoAnimo.ALEGRE,
                 TipoEstadoAnimo.FELIZ,
                 TipoEstadoAnimo.NEUTRAL,
                 TipoEstadoAnimo.TRISTE,
-                TipoEstadoAnimo.MUY_TRISTE
+                TipoEstadoAnimo.TERRIBLE
             )
 
             tipos.forEachIndexed { index, tipo ->
@@ -115,7 +120,8 @@ class EstadisticasFragment : Fragment() {
             }
 
             val dataSet = BarDataSet(entries, "Estados de Ánimo")
-            dataSet.color = Color.BLUE
+            // Color pastel suave
+            dataSet.color = Color.parseColor("#81C784") // Verde pastel
             dataSet.valueTextSize = 12f
 
             val barData = BarData(dataSet)

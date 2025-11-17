@@ -5,6 +5,14 @@
         android:icon="@android:drawable/ic_menu_view"
         android:title="Inicio" />
     <item
+        android:id="@+id/nav_salud_fisica"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Física" />
+    <item
+        android:id="@+id/nav_salud_mental"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Mental" />
+    <item
         android:id="@+id/nav_habitos_estadisticas"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="Hábitos" />

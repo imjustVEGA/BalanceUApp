@@ -25,7 +25,17 @@ class MainActivity : AppCompatActivity() {
             authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
             // Verificar si el usuario está autenticado
-            if (!authViewModel.verificarSesion()) {
+            try {
+                if (!authViewModel.verificarSesion()) {
+                    val intent = Intent(this, AuthActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                    return
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("MainActivity", "Error al verificar sesión: ${e.message}", e)
+                // Si hay error verificando sesión, redirigir a login
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -36,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             setupNavigation()
         } catch (e: Exception) {
             android.util.Log.e("MainActivity", "Error en onCreate: ${e.message}", e)
+            e.printStackTrace()
             // Mostrar mensaje de error al usuario
             android.widget.Toast.makeText(
                 this,

@@ -1,11 +1,11 @@
 package com.example.balanceuapp.data.model
 
 enum class TipoEstadoAnimo {
-    MUY_FELIZ,
+    ALEGRE,
     FELIZ,
     NEUTRAL,
     TRISTE,
-    MUY_TRISTE
+    TERRIBLE
 }
 
 data class EstadoAnimo(

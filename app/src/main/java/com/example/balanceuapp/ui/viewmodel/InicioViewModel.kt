@@ -36,28 +36,39 @@ class InicioViewModel(application: Application) : AndroidViewModel(application) 
         val finDia = inicioDia + (24 * 60 * 60 * 1000) - 1
 
         viewModelScope.launch {
-            // Cargar hábitos del día
-            val resultHabitos = habitoRepository.obtenerHabitosDelDia(usuarioId, inicioDia, finDia)
-            resultHabitos.onSuccess { lista ->
-                _habitosDelDia.postValue(lista)
-            }.onFailure { exception ->
-                _error.postValue("Error al cargar hábitos: ${exception.message}")
-            }
+            try {
+                // Cargar hábitos del día
+                val resultHabitos = habitoRepository.obtenerHabitosDelDia(usuarioId, inicioDia, finDia)
+                resultHabitos.onSuccess { lista ->
+                    _habitosDelDia.postValue(lista)
+                }.onFailure { exception ->
+                    android.util.Log.e("InicioViewModel", "Error al cargar hábitos: ${exception.message}", exception)
+                    _error.postValue("Error al cargar hábitos: ${exception.message}")
+                    _habitosDelDia.postValue(emptyList()) // Inicializar con lista vacía
+                }
 
-            // Cargar estado de ánimo del día
-            val resultEstado = estadoAnimoRepository.obtenerEstadoAnimoDelDia(usuarioId, inicioDia, finDia)
-            resultEstado.onSuccess { estado ->
-                _estadoAnimoDelDia.postValue(estado)
-            }.onFailure { exception ->
-                _error.postValue("Error al cargar estado de ánimo: ${exception.message}")
-            }
+                // Cargar estado de ánimo del día
+                val resultEstado = estadoAnimoRepository.obtenerEstadoAnimoDelDia(usuarioId, inicioDia, finDia)
+                resultEstado.onSuccess { estado ->
+                    _estadoAnimoDelDia.postValue(estado)
+                }.onFailure { exception ->
+                    android.util.Log.e("InicioViewModel", "Error al cargar estado de ánimo: ${exception.message}", exception)
+                    _error.postValue("Error al cargar estado de ánimo: ${exception.message}")
+                    _estadoAnimoDelDia.postValue(null) // Inicializar con null
+                }
 
-            // Cargar frase motivacional
-            val resultFrase = fraseRepository.obtenerFraseAleatoria()
-            resultFrase.onSuccess { frase ->
-                _fraseMotivacional.postValue(frase)
-            }.onFailure { exception ->
-                _error.postValue("Error al cargar frase: ${exception.message}")
+                // Cargar frase motivacional
+                val resultFrase = fraseRepository.obtenerFraseAleatoria()
+                resultFrase.onSuccess { frase ->
+                    _fraseMotivacional.postValue(frase)
+                }.onFailure { exception ->
+                    android.util.Log.e("InicioViewModel", "Error al cargar frase: ${exception.message}", exception)
+                    _error.postValue("Error al cargar frase: ${exception.message}")
+                    _fraseMotivacional.postValue(null) // Inicializar con null
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("InicioViewModel", "Error general en cargarResumenDelDia: ${e.message}", e)
+                _error.postValue("Error al cargar datos: ${e.message}")
             }
         }
     }

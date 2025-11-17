@@ -70,7 +70,9 @@ class HabitosFragment : Fragment() {
     private fun setupObservers() {
         habitoViewModel.habitos.observe(viewLifecycleOwner) { habitos ->
             adapter.submitList(habitos)
-            binding.tvEmptyState.visibility = if (habitos.isEmpty()) View.VISIBLE else View.GONE
+            val isEmpty = habitos.isEmpty()
+            binding.emptyStateLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.rvHabitos.visibility = if (isEmpty) View.GONE else View.VISIBLE
         }
 
         habitoViewModel.error.observe(viewLifecycleOwner) { error ->

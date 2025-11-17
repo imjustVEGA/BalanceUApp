@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Header con saludo -->
+        <!-- Header con saludo personalizado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,21 +25,115 @@
                 android:id="@+id/tvSaludo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hola, ¿cómo te sientes hoy?"
-                android:textSize="28sp"
+                android:text="¡Hola! 👋"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:letterSpacing="0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="¿Cómo te sientes hoy?"
+                android:textSize="18sp"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- Resumen del Día - Cards horizontales -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:weightSum="2">
+
+            <!-- Card Hábitos -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/primary_green"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvHabitossCompletados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0/0"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hábitos"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Estado de Ánimo -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/secondary_teal"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvEstadoAnimoIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="😐"
+                        android:textSize="32sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvEstadoAnimo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sin registrar"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
         <!-- Selector de Estado de Ánimo -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/background_white">
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/background_white"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,14 +144,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estado de ánimo"
+                    android:text="Registra tu estado de ánimo"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
                     android:layout_marginBottom="16dp" />
 
                 <LinearLayout
-                    android:id="@+id/moodSelectorLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -73,7 +166,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -81,14 +174,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😄"
-                            android:textSize="32sp"
-                            android:layout_marginBottom="8dp" />
+                            android:textSize="34sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Muy Feliz"
-                            android:textSize="12sp"
+                            android:text="Alegre"
+                            android:textSize="11sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
@@ -101,7 +195,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -109,14 +203,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="🙂"
-                            android:textSize="32sp"
-                            android:layout_marginBottom="8dp" />
+                            android:textSize="34sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Feliz"
-                            android:textSize="12sp"
+                            android:textSize="11sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
@@ -129,7 +224,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -137,14 +232,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😐"
-                            android:textSize="32sp"
-                            android:layout_marginBottom="8dp" />
+                            android:textSize="34sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Neutral"
-                            android:textSize="12sp"
+                            android:textSize="11sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
@@ -157,7 +253,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -165,14 +261,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😔"
-                            android:textSize="32sp"
-                            android:layout_marginBottom="8dp" />
+                            android:textSize="34sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Triste"
-                            android:textSize="12sp"
+                            android:textSize="11sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
@@ -185,7 +282,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true">
 
@@ -193,14 +290,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😢"
-                            android:textSize="32sp"
-                            android:layout_marginBottom="8dp" />
+                            android:textSize="34sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Muy Triste"
-                            android:textSize="12sp"
+                            android:text="Terrible"
+                            android:textSize="11sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
                 </LinearLayout>
@@ -213,10 +311,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Nota (opcional)"
-                    app:boxCornerRadiusBottomEnd="12dp"
-                    app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusTopEnd="12dp"
-                    app:boxCornerRadiusTopStart="12dp">
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:startIconDrawable="@android:drawable/ic_menu_edit"
+                    app:startIconTint="@color/primary_green">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNota"
@@ -224,30 +324,36 @@
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
                         android:minLines="2"
-                        android:maxLines="3" />
+                        android:maxLines="3"
+                        android:padding="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGuardarEstadoAnimo"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="56dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="@color/primary_green"
-                    android:text="Guardar"
+                    android:text="Guardar estado de ánimo"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    app:cornerRadius="12dp" />
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    app:cornerRadius="16dp"
+                    app:icon="@android:drawable/ic_menu_save"
+                    app:iconGravity="textStart"
+                    app:iconTint="@android:color/white" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Tarjeta de Recomendación del Día -->
+        <!-- Recomendación del Día -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="3dp"
             app:cardBackgroundColor="@color/secondary_teal"
             app:strokeWidth="0dp">
 
@@ -255,51 +361,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💡 Recomendación del Día"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:id="@+id/tvRecomendacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando recomendación..."
-                    android:textSize="15sp"
-                    android:textColor="@android:color/white"
-                    android:lineSpacingMultiplier="1.4" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Resumen de Progreso Semanal -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/background_white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📊 Progreso Semanal"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="16dp" />
+                android:padding="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -309,217 +371,32 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:id="@+id/tvHabitossCompletados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💡"
+                        android:textSize="24sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Hábitos: 0/0"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_primary" />
-
-                    <TextView
-                        android:id="@+id/tvEstadoAnimo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Estado: -"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_secondary" />
+                        android:text="Frase del Día"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
-
-                <!-- Mini gráfica de progreso -->
-                <View
-                    android:id="@+id/progressBarSemanal"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="@drawable/progress_background"
-                    android:layout_marginTop="8dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvRecomendacion"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Esta semana"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_hint" />
+                    android:text="Cargando recomendación..."
+                    android:textSize="15sp"
+                    android:textColor="@android:color/white"
+                    android:lineSpacingMultiplier="1.5" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Accesos Rápidos -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accesos Rápidos"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="12dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <!-- Salud Física -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSaludFisica"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="@color/primary_green_light"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="💪"
-                        android:textSize="32sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Salud Física"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Salud Mental -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSaludMental"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="@color/secondary_teal_light"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🧘"
-                        android:textSize="32sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Salud Mental"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:weightSum="2">
-
-            <!-- Hábitos -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardHabitos"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="@color/accent_sage"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="✅"
-                        android:textSize="32sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hábitos"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Perfil -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPerfil"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="@color/accent_mint"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👤"
-                        android:textSize="32sp"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Perfil"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
 
     </LinearLayout>
 

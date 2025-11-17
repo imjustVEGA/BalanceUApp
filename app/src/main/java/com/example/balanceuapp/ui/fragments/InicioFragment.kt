@@ -38,29 +38,48 @@ class InicioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        inicioViewModel = ViewModelProvider(this)[InicioViewModel::class.java]
-        estadoAnimoViewModel = ViewModelProvider(this)[EstadoAnimoViewModel::class.java]
-        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        try {
+            inicioViewModel = ViewModelProvider(this)[InicioViewModel::class.java]
+            estadoAnimoViewModel = ViewModelProvider(this)[EstadoAnimoViewModel::class.java]
+            authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
 
-        val userId = authViewModel.obtenerUsuarioActual()
-        if (userId != null) {
-            inicioViewModel.cargarResumenDelDia(userId)
-            val fechaActual = System.currentTimeMillis()
-            estadoAnimoViewModel.obtenerEstadoAnimoDelDia(userId, fechaActual)
+            val userId = authViewModel.obtenerUsuarioActual()
+            if (userId != null) {
+                setupSaludoPersonalizado()
+                inicioViewModel.cargarResumenDelDia(userId)
+                val fechaActual = System.currentTimeMillis()
+                estadoAnimoViewModel.obtenerEstadoAnimoDelDia(userId, fechaActual)
+            } else {
+                Toast.makeText(requireContext(), "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
+            }
+
+            setupMoodSelector()
+            setupListeners()
+            setupObservers()
+        } catch (e: Exception) {
+            android.util.Log.e("InicioFragment", "Error en onViewCreated: ${e.message}", e)
+            Toast.makeText(requireContext(), "Error al cargar datos: ${e.message}", Toast.LENGTH_LONG).show()
         }
+    }
 
-        setupMoodSelector()
-        setupListeners()
-        setupObservers()
+    private fun setupSaludoPersonalizado() {
+        val hora = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        val saludo = when (hora) {
+            in 5..11 -> "¡Buenos días!"
+            in 12..17 -> "¡Buenas tardes!"
+            in 18..23 -> "¡Buenas noches!"
+            else -> "¡Hola!"
+        }
+        binding.tvSaludo.text = "$saludo 👋"
     }
 
     private fun setupMoodSelector() {
         val moodViews = mapOf(
-            TipoEstadoAnimo.MUY_FELIZ to binding.moodMuyFeliz,
+            TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
             TipoEstadoAnimo.FELIZ to binding.moodFeliz,
             TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
             TipoEstadoAnimo.TRISTE to binding.moodTriste,
-            TipoEstadoAnimo.MUY_TRISTE to binding.moodMuyTriste
+            TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
         )
 
         moodViews.forEach { (tipo, view) ->
@@ -88,11 +107,11 @@ class InicioFragment : Fragment() {
 
     private fun getMoodColor(tipo: TipoEstadoAnimo): Int {
         return when (tipo) {
-            TipoEstadoAnimo.MUY_FELIZ -> R.color.mood_very_happy
+            TipoEstadoAnimo.ALEGRE -> R.color.mood_very_happy
             TipoEstadoAnimo.FELIZ -> R.color.mood_happy
             TipoEstadoAnimo.NEUTRAL -> R.color.mood_neutral
             TipoEstadoAnimo.TRISTE -> R.color.mood_sad
-            TipoEstadoAnimo.MUY_TRISTE -> R.color.mood_very_sad
+            TipoEstadoAnimo.TERRIBLE -> R.color.mood_very_sad
         }
     }
 
@@ -118,45 +137,45 @@ class InicioFragment : Fragment() {
             }
         }
 
-        // Navegación a accesos rápidos
-        binding.cardSaludFisica.setOnClickListener {
-            findNavController().navigate(R.id.nav_salud_fisica)
-        }
-
-        binding.cardSaludMental.setOnClickListener {
-            findNavController().navigate(R.id.nav_salud_mental)
-        }
-
-        binding.cardHabitos.setOnClickListener {
-            findNavController().navigate(R.id.nav_habitos_estadisticas)
-        }
-
-        binding.cardPerfil.setOnClickListener {
-            findNavController().navigate(R.id.nav_perfil)
-        }
     }
 
     private fun setupObservers() {
         inicioViewModel.habitosDelDia.observe(viewLifecycleOwner) { habitos ->
             val completados = inicioViewModel.obtenerHabitossCompletados()
             val total = inicioViewModel.obtenerTotalHabitoss()
-            binding.tvHabitossCompletados.text = "Hábitos: $completados/$total"
+            binding.tvHabitossCompletados.text = "$completados/$total"
         }
 
         inicioViewModel.estadoAnimoDelDia.observe(viewLifecycleOwner) { estado ->
             if (estado != null) {
-                binding.tvEstadoAnimo.text = "Estado: ${estado.tipo.name}"
+                val estadoTexto = when (estado.tipo) {
+                    TipoEstadoAnimo.ALEGRE -> "Muy Feliz"
+                    TipoEstadoAnimo.FELIZ -> "Feliz"
+                    TipoEstadoAnimo.NEUTRAL -> "Neutral"
+                    TipoEstadoAnimo.TRISTE -> "Triste"
+                    TipoEstadoAnimo.TERRIBLE -> "Muy Triste"
+                }
+                val estadoEmoji = when (estado.tipo) {
+                    TipoEstadoAnimo.ALEGRE -> "😄"
+                    TipoEstadoAnimo.FELIZ -> "🙂"
+                    TipoEstadoAnimo.NEUTRAL -> "😐"
+                    TipoEstadoAnimo.TRISTE -> "😔"
+                    TipoEstadoAnimo.TERRIBLE -> "😢"
+                }
+                binding.tvEstadoAnimo.text = estadoTexto
+                binding.tvEstadoAnimoIcon.text = estadoEmoji
                 selectedMood = estado.tipo
                 updateMoodSelection(mapOf(
-                    TipoEstadoAnimo.MUY_FELIZ to binding.moodMuyFeliz,
+                    TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
                     TipoEstadoAnimo.FELIZ to binding.moodFeliz,
                     TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
                     TipoEstadoAnimo.TRISTE to binding.moodTriste,
-                    TipoEstadoAnimo.MUY_TRISTE to binding.moodMuyTriste
+                    TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
                 ))
                 binding.etNota.setText(estado.nota)
             } else {
-                binding.tvEstadoAnimo.text = "Estado: -"
+                binding.tvEstadoAnimo.text = "Sin registrar"
+                binding.tvEstadoAnimoIcon.text = "😐"
             }
         }
 
@@ -174,11 +193,11 @@ class InicioFragment : Fragment() {
                 binding.etNota.text?.clear()
                 selectedMood = null
                 updateMoodSelection(mapOf(
-                    TipoEstadoAnimo.MUY_FELIZ to binding.moodMuyFeliz,
+                    TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
                     TipoEstadoAnimo.FELIZ to binding.moodFeliz,
                     TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
                     TipoEstadoAnimo.TRISTE to binding.moodTriste,
-                    TipoEstadoAnimo.MUY_TRISTE to binding.moodMuyTriste
+                    TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
                 ))
             }
         }
@@ -186,6 +205,13 @@ class InicioFragment : Fragment() {
         estadoAnimoViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        inicioViewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                android.util.Log.e("InicioFragment", "Error del ViewModel: $it")
+                // No mostrar toast para errores menores, solo loguear
             }
         }
     }

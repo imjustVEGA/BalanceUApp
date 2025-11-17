@@ -10,7 +10,9 @@ class EstadoAnimoRepository {
         try {
             FirebaseFirestore.getInstance()
         } catch (e: Exception) {
-            throw IllegalStateException("Firebase no está configurado correctamente. Verifica que google-services.json sea válido.", e)
+            android.util.Log.e("EstadoAnimoRepository", "Error al inicializar Firestore: ${e.message}", e)
+            e.printStackTrace()
+            FirebaseFirestore.getInstance()
         }
     }
 
