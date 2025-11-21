@@ -11,12 +11,14 @@ import com.example.balanceuapp.data.model.Habito
 import com.example.balanceuapp.data.repository.EstadoAnimoRepository
 import com.example.balanceuapp.data.repository.FraseRepository
 import com.example.balanceuapp.data.repository.HabitoRepository
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.launch
 
 class InicioViewModel(application: Application) : AndroidViewModel(application) {
     private val habitoRepository = HabitoRepository()
     private val estadoAnimoRepository = EstadoAnimoRepository()
     private val fraseRepository = FraseRepository(application)
+    private var habitosDelDiaListener: ListenerRegistration? = null
 
     private val _habitosDelDia = MutableLiveData<List<Habito>>()
     val habitosDelDia: LiveData<List<Habito>> = _habitosDelDia
@@ -31,23 +33,10 @@ class InicioViewModel(application: Application) : AndroidViewModel(application) 
     val error: LiveData<String?> = _error
 
     fun cargarResumenDelDia(usuarioId: String) {
-        val fechaActual = System.currentTimeMillis()
-        val inicioDia = fechaActual - (fechaActual % (24 * 60 * 60 * 1000))
-        val finDia = inicioDia + (24 * 60 * 60 * 1000) - 1
-
         viewModelScope.launch {
             try {
-                // Cargar hábitos del día
-                val resultHabitos = habitoRepository.obtenerHabitosDelDia(usuarioId, inicioDia, finDia)
-                resultHabitos.onSuccess { lista ->
-                    _habitosDelDia.postValue(lista)
-                }.onFailure { exception ->
-                    android.util.Log.e("InicioViewModel", "Error al cargar hábitos: ${exception.message}", exception)
-                    _error.postValue("Error al cargar hábitos: ${exception.message}")
-                    _habitosDelDia.postValue(emptyList()) // Inicializar con lista vacía
-                }
-
                 // Cargar estado de ánimo del día
+                val (inicioDia, finDia) = calcularLimitesDelDia(System.currentTimeMillis())
                 val resultEstado = estadoAnimoRepository.obtenerEstadoAnimoDelDia(usuarioId, inicioDia, finDia)
                 resultEstado.onSuccess { estado ->
                     _estadoAnimoDelDia.postValue(estado)
@@ -79,6 +68,43 @@ class InicioViewModel(application: Application) : AndroidViewModel(application) 
 
     fun obtenerTotalHabitoss(): Int {
         return _habitosDelDia.value?.size ?: 0
+    }
+
+    fun startObservandoHabitosDelDia(usuarioId: String) {
+        stopObservandoHabitosDelDia()
+        val (inicioDia, finDia) = calcularLimitesDelDia(System.currentTimeMillis())
+        habitosDelDiaListener = habitoRepository.observarHabitosDelDia(
+            usuarioId = usuarioId,
+            fechaInicio = inicioDia,
+            fechaFin = finDia,
+            onUpdate = { lista ->
+                _habitosDelDia.postValue(lista)
+                _error.postValue(null)
+            },
+            onError = { exception ->
+                _error.postValue(exception.message)
+            }
+        )
+    }
+
+    fun stopObservandoHabitosDelDia() {
+        habitosDelDiaListener?.remove()
+        habitosDelDiaListener = null
+    }
+
+    private fun calcularLimitesDelDia(fechaActual: Long): Pair<Long, Long> {
+        val inicioDia = fechaActual - (fechaActual % MILISEGUNDOS_EN_UN_DIA)
+        val finDia = inicioDia + MILISEGUNDOS_EN_UN_DIA - 1
+        return inicioDia to finDia
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopObservandoHabitosDelDia()
+    }
+
+    private companion object {
+        const val MILISEGUNDOS_EN_UN_DIA = 24 * 60 * 60 * 1000L
     }
 }
 

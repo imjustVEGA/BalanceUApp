@@ -174,7 +174,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😄"
-                            android:textSize="34sp"
+                            android:textSize="32sp"
                             android:gravity="center"
                             android:layout_marginBottom="4dp" />
 
@@ -203,7 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="🙂"
-                            android:textSize="34sp"
+                            android:textSize="32sp"
                             android:gravity="center"
                             android:layout_marginBottom="4dp" />
 
@@ -232,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😐"
-                            android:textSize="34sp"
+                            android:textSize="32sp"
                             android:gravity="center"
                             android:layout_marginBottom="4dp" />
 
@@ -261,7 +261,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😔"
-                            android:textSize="34sp"
+                            android:textSize="32sp"
                             android:gravity="center"
                             android:layout_marginBottom="4dp" />
 
@@ -290,7 +290,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="😢"
-                            android:textSize="34sp"
+                            android:textSize="32sp"
                             android:gravity="center"
                             android:layout_marginBottom="4dp" />
 
@@ -298,7 +298,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Terrible"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
                 </LinearLayout>

@@ -7,10 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.balanceuapp.data.model.Habito
 import com.example.balanceuapp.data.repository.HabitoRepository
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.launch
 
 class HabitoViewModel(application: Application) : AndroidViewModel(application) {
     private val habitoRepository = HabitoRepository()
+    private var habitosListener: ListenerRegistration? = null
 
     private val _habitos = MutableLiveData<List<Habito>>()
     val habitos: LiveData<List<Habito>> = _habitos
@@ -38,7 +40,20 @@ class HabitoViewModel(application: Application) : AndroidViewModel(application) 
             val result = habitoRepository.agregarHabito(habito)
             result.onSuccess {
                 _operacionExitosa.postValue(true)
-                cargarHabitos(habito.usuarioId)
+                _error.postValue(null)
+            }.onFailure { exception ->
+                _error.postValue(exception.message)
+                _operacionExitosa.postValue(false)
+            }
+        }
+    }
+
+    fun actualizarHabito(habito: Habito) {
+        viewModelScope.launch {
+            val result = habitoRepository.actualizarHabito(habito)
+            result.onSuccess {
+                _operacionExitosa.postValue(true)
+                _error.postValue(null)
             }.onFailure { exception ->
                 _error.postValue(exception.message)
                 _operacionExitosa.postValue(false)
@@ -51,7 +66,7 @@ class HabitoViewModel(application: Application) : AndroidViewModel(application) 
             val result = habitoRepository.marcarCompletado(habitoId, completado)
             result.onSuccess {
                 _operacionExitosa.postValue(true)
-                cargarHabitos(usuarioId)
+                _error.postValue(null)
             }.onFailure { exception ->
                 _error.postValue(exception.message)
                 _operacionExitosa.postValue(false)
@@ -64,7 +79,7 @@ class HabitoViewModel(application: Application) : AndroidViewModel(application) 
             val result = habitoRepository.eliminarHabito(habitoId)
             result.onSuccess {
                 _operacionExitosa.postValue(true)
-                cargarHabitos(usuarioId)
+                _error.postValue(null)
             }.onFailure { exception ->
                 _error.postValue(exception.message)
                 _operacionExitosa.postValue(false)
@@ -82,6 +97,30 @@ class HabitoViewModel(application: Application) : AndroidViewModel(application) 
                 _error.postValue(exception.message)
             }
         }
+    }
+
+    fun startObservandoHabitos(usuarioId: String) {
+        stopObservandoHabitos()
+        habitosListener = habitoRepository.observarHabitos(
+            usuarioId = usuarioId,
+            onUpdate = { lista ->
+                _habitos.postValue(lista)
+                _error.postValue(null)
+            },
+            onError = { exception ->
+                _error.postValue(exception.message)
+            }
+        )
+    }
+
+    fun stopObservandoHabitos() {
+        habitosListener?.remove()
+        habitosListener = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopObservandoHabitos()
     }
 }
 

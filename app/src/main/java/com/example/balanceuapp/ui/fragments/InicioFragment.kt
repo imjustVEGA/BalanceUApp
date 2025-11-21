@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.balanceuapp.R
 import com.example.balanceuapp.data.model.EstadoAnimo
 import com.example.balanceuapp.data.model.TipoEstadoAnimo
@@ -17,6 +16,7 @@ import com.example.balanceuapp.databinding.FragmentInicioBinding
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
 import com.example.balanceuapp.ui.viewmodel.EstadoAnimoViewModel
 import com.example.balanceuapp.ui.viewmodel.InicioViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class InicioFragment : Fragment() {
     private var _binding: FragmentInicioBinding? = null
@@ -25,6 +25,7 @@ class InicioFragment : Fragment() {
     private lateinit var estadoAnimoViewModel: EstadoAnimoViewModel
     private lateinit var authViewModel: AuthViewModel
     private var selectedMood: TipoEstadoAnimo? = null
+    private var savedUserId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,19 +44,19 @@ class InicioFragment : Fragment() {
             estadoAnimoViewModel = ViewModelProvider(this)[EstadoAnimoViewModel::class.java]
             authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
 
-            val userId = authViewModel.obtenerUsuarioActual()
-            if (userId != null) {
-                setupSaludoPersonalizado()
-                inicioViewModel.cargarResumenDelDia(userId)
-                val fechaActual = System.currentTimeMillis()
-                estadoAnimoViewModel.obtenerEstadoAnimoDelDia(userId, fechaActual)
-            } else {
-                Toast.makeText(requireContext(), "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
-            }
-
             setupMoodSelector()
             setupListeners()
             setupObservers()
+
+            val userId = authViewModel.obtenerUsuarioActual()
+            if (userId != null) {
+                setupSaludoPersonalizado()
+                inicioViewModel.startObservandoHabitosDelDia(userId)
+                inicioViewModel.cargarResumenDelDia(userId)
+                savedUserId = userId
+            } else {
+                Toast.makeText(requireContext(), "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: Exception) {
             android.util.Log.e("InicioFragment", "Error en onViewCreated: ${e.message}", e)
             Toast.makeText(requireContext(), "Error al cargar datos: ${e.message}", Toast.LENGTH_LONG).show()
@@ -127,6 +128,8 @@ class InicioFragment : Fragment() {
             val userId = authViewModel.obtenerUsuarioActual()
 
             if (userId != null) {
+                binding.btnGuardarEstadoAnimo.isEnabled = false
+                animateSaveButton()
                 val estadoAnimo = EstadoAnimo(
                     usuarioId = userId,
                     tipo = tipo,
@@ -137,6 +140,21 @@ class InicioFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun animateSaveButton() {
+        binding.btnGuardarEstadoAnimo.animate()
+            .scaleX(0.97f)
+            .scaleY(0.97f)
+            .setDuration(80)
+            .withEndAction {
+                binding.btnGuardarEstadoAnimo.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(80)
+                    .start()
+            }
+            .start()
     }
 
     private fun setupObservers() {
@@ -188,8 +206,8 @@ class InicioFragment : Fragment() {
         }
 
         estadoAnimoViewModel.operacionExitosa.observe(viewLifecycleOwner) { exitoso ->
-            if (exitoso) {
-                Toast.makeText(requireContext(), "Estado de ánimo guardado", Toast.LENGTH_SHORT).show()
+            if (exitoso == true) {
+                Snackbar.make(binding.root, "Nota guardada", Snackbar.LENGTH_SHORT).show()
                 binding.etNota.text?.clear()
                 selectedMood = null
                 updateMoodSelection(mapOf(
@@ -200,11 +218,16 @@ class InicioFragment : Fragment() {
                     TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
                 ))
             }
+            if (exitoso != null) {
+                binding.btnGuardarEstadoAnimo.isEnabled = true
+                savedUserId?.let { inicioViewModel.cargarResumenDelDia(it) }
+            }
         }
 
         estadoAnimoViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.btnGuardarEstadoAnimo.isEnabled = true
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             }
         }
 
@@ -218,6 +241,7 @@ class InicioFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        inicioViewModel.stopObservandoHabitosDelDia()
         _binding = null
     }
 }

@@ -2,6 +2,7 @@ package com.example.balanceuapp.data.repository
 
 import com.example.balanceuapp.data.model.Habito
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 
@@ -90,6 +91,7 @@ class HabitoRepository {
                 .whereEqualTo("usuarioId", usuarioId)
                 .whereGreaterThanOrEqualTo("fechaCreacion", fechaInicio)
                 .whereLessThanOrEqualTo("fechaCreacion", fechaFin)
+                .orderBy("fechaCreacion", Query.Direction.DESCENDING)
                 .get()
                 .await()
             
@@ -99,6 +101,52 @@ class HabitoRepository {
             Result.success(habitos)
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    fun observarHabitos(
+        usuarioId: String,
+        onUpdate: (List<Habito>) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration {
+        val query = firestore.collection("habitos")
+            .whereEqualTo("usuarioId", usuarioId)
+            .orderBy("fechaCreacion", Query.Direction.DESCENDING)
+
+        return query.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                onError(exception)
+                return@addSnapshotListener
+            }
+            val habitos = snapshot?.documents?.map { doc ->
+                Habito.fromMap(doc.data ?: emptyMap()).copy(id = doc.id)
+            } ?: emptyList()
+            onUpdate(habitos)
+        }
+    }
+
+    fun observarHabitosDelDia(
+        usuarioId: String,
+        fechaInicio: Long,
+        fechaFin: Long,
+        onUpdate: (List<Habito>) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration {
+        val query = firestore.collection("habitos")
+            .whereEqualTo("usuarioId", usuarioId)
+            .whereGreaterThanOrEqualTo("fechaCreacion", fechaInicio)
+            .whereLessThanOrEqualTo("fechaCreacion", fechaFin)
+            .orderBy("fechaCreacion", Query.Direction.DESCENDING)
+
+        return query.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                onError(exception)
+                return@addSnapshotListener
+            }
+            val habitos = snapshot?.documents?.map { doc ->
+                Habito.fromMap(doc.data ?: emptyMap()).copy(id = doc.id)
+            } ?: emptyList()
+            onUpdate(habitos)
         }
     }
 }

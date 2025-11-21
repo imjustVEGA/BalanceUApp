@@ -1,11 +1,13 @@
 package com.example.balanceuapp.ui.fragments
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
@@ -49,6 +51,9 @@ class HabitosFragment : Fragment() {
             },
             onEliminar = { habito ->
                 mostrarDialogoEliminar(habito)
+            },
+            onEditar = { habito ->
+                mostrarDialogoHabito(habito)
             }
         )
 
@@ -56,14 +61,14 @@ class HabitosFragment : Fragment() {
         binding.rvHabitos.adapter = adapter
 
         binding.fabAgregarHabito.setOnClickListener {
-            mostrarDialogoAgregarHabito()
+            mostrarDialogoHabito()
         }
 
         setupObservers()
 
         val userId = authViewModel.obtenerUsuarioActual()
         if (userId != null) {
-            habitoViewModel.cargarHabitos(userId)
+            habitoViewModel.startObservandoHabitos(userId)
         }
     }
 
@@ -82,32 +87,55 @@ class HabitosFragment : Fragment() {
         }
     }
 
-    private fun mostrarDialogoAgregarHabito() {
+    private fun mostrarDialogoHabito(habito: Habito? = null) {
         val dialogBinding = DialogAgregarHabitoBinding.inflate(layoutInflater)
+        dialogBinding.etNombreHabito.setText(habito?.nombre)
+        dialogBinding.etDescripcionHabito.setText(habito?.descripcion)
+
+        val titulo = if (habito == null) "Agregar Hábito" else "Editar Hábito"
+        val positivo = if (habito == null) "Agregar" else "Actualizar"
+
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Agregar Hábito")
+            .setTitle(titulo)
             .setView(dialogBinding.root)
-            .setPositiveButton("Agregar") { _, _ ->
+            .setPositiveButton(positivo, null)
+            .setNegativeButton("Cancelar", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val boton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            boton.setOnClickListener {
                 val nombre = dialogBinding.etNombreHabito.text.toString().trim()
                 val descripcion = dialogBinding.etDescripcionHabito.text.toString().trim()
 
                 if (nombre.isEmpty()) {
                     Toast.makeText(requireContext(), "El nombre es requerido", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
+                    return@setOnClickListener
                 }
 
                 val userId = authViewModel.obtenerUsuarioActual()
-                if (userId != null) {
-                    val habito = Habito(
+                if (habito == null) {
+                    if (userId == null) {
+                        Toast.makeText(requireContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    val nuevoHabito = Habito(
                         usuarioId = userId,
                         nombre = nombre,
                         descripcion = descripcion
                     )
-                    habitoViewModel.agregarHabito(habito)
+                    habitoViewModel.agregarHabito(nuevoHabito)
+                } else {
+                    val habitoActualizado = habito.copy(
+                        nombre = nombre,
+                        descripcion = descripcion
+                    )
+                    habitoViewModel.actualizarHabito(habitoActualizado)
                 }
+
+                dialog.dismiss()
             }
-            .setNegativeButton("Cancelar", null)
-            .create()
+        }
 
         dialog.show()
     }
@@ -128,12 +156,14 @@ class HabitosFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        habitoViewModel.stopObservandoHabitos()
         _binding = null
     }
 
     private class HabitosAdapter(
         private val onCompletadoChanged: (Habito, Boolean) -> Unit,
-        private val onEliminar: (Habito) -> Unit
+        private val onEliminar: (Habito) -> Unit,
+        private val onEditar: (Habito) -> Unit
     ) : androidx.recyclerview.widget.ListAdapter<Habito, HabitosAdapter.HabitoViewHolder>(
         HabitoDiffCallback()
     ) {
@@ -156,10 +186,27 @@ class HabitosFragment : Fragment() {
             fun bind(habito: Habito) {
                 binding.tvNombreHabito.text = habito.nombre
                 binding.tvDescripcionHabito.text = habito.descripcion
-                binding.cbCompletado.isChecked = habito.completado
 
-                binding.cbCompletado.setOnCheckedChangeListener { _, isChecked ->
+                val context = binding.switchCompletado.context
+                val thumbColor = ContextCompat.getColor(
+                    context,
+                    if (habito.completado) R.color.switch_thumb_done else R.color.switch_thumb_pending
+                )
+                val trackColor = ContextCompat.getColor(
+                    context,
+                    if (habito.completado) R.color.switch_track_done else R.color.switch_track_pending
+                )
+                binding.switchCompletado.thumbTintList = ColorStateList.valueOf(thumbColor)
+                binding.switchCompletado.trackTintList = ColorStateList.valueOf(trackColor)
+
+                binding.switchCompletado.setOnCheckedChangeListener(null)
+                binding.switchCompletado.isChecked = habito.completado
+                binding.switchCompletado.setOnCheckedChangeListener { _, isChecked ->
                     onCompletadoChanged(habito, isChecked)
+                }
+
+                binding.btnEditar.setOnClickListener {
+                    onEditar(habito)
                 }
 
                 binding.btnEliminar.setOnClickListener {

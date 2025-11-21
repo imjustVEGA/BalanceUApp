@@ -66,12 +66,25 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
-                    android:layout_marginBottom="20dp" />
+                    android:layout_marginBottom="12dp" />
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChartEstadosAnimo"
+                <TextView
+                    android:id="@+id/tvEstadosAnimoVacio"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="wrap_content"
+                    android:text="Aún no registras estados de ánimo. Empieza desde el inicio."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvEstadosAnimo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_estado_animo" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

@@ -29,6 +29,7 @@ class EstadoAnimoViewModel(application: Application) : AndroidViewModel(applicat
             val result = estadoAnimoRepository.agregarEstadoAnimo(estadoAnimo)
             result.onSuccess {
                 _operacionExitosa.postValue(true)
+                _error.postValue(null)
                 obtenerEstadoAnimoDelDia(estadoAnimo.usuarioId, estadoAnimo.fecha)
             }.onFailure { exception ->
                 _error.postValue(exception.message)
