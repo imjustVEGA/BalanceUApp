@@ -24,10 +24,10 @@
         tools:layout="@layout/fragment_salud_mental" />
 
     <fragment
-        android:id="@+id/nav_habitos_estadisticas"
-        android:name="com.example.balanceuapp.ui.fragments.HabitosEstadisticasFragment"
-        android:label="Hábitos y Estadísticas"
-        tools:layout="@layout/fragment_habitos_estadisticas" />
+        android:id="@+id/nav_habitos"
+        android:name="com.example.balanceuapp.ui.fragments.HabitosFragment"
+        android:label="Hábitos"
+        tools:layout="@layout/fragment_habitos" />
 
     <fragment
         android:id="@+id/nav_perfil"

@@ -2,6 +2,7 @@ package com.example.balanceuapp.data.repository
 
 import com.example.balanceuapp.data.model.EstadoAnimo
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 
@@ -83,6 +84,33 @@ class EstadoAnimoRepository {
             Result.success(estados)
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    fun observarEstadosAnimoPorRango(
+        usuarioId: String,
+        fechaInicio: Long,
+        fechaFin: Long,
+        onUpdate: (List<EstadoAnimo>) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration {
+        val query = firestore.collection("estadosAnimo")
+            .whereEqualTo("usuarioId", usuarioId)
+            .whereGreaterThanOrEqualTo("fecha", fechaInicio)
+            .whereLessThanOrEqualTo("fecha", fechaFin)
+            .orderBy("fecha", Query.Direction.ASCENDING)
+
+        return query.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                onError(exception)
+                return@addSnapshotListener
+            }
+
+            val estados = snapshot?.documents?.map { doc ->
+                EstadoAnimo.fromMap(doc.data ?: emptyMap()).copy(id = doc.id)
+            } ?: emptyList()
+
+            onUpdate(estados)
         }
     }
 

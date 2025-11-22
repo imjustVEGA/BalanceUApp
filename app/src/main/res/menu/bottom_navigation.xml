@@ -13,9 +13,9 @@
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="Mental" />
     <item
-        android:id="@+id/nav_habitos_estadisticas"
+        android:id="@+id/nav_habitos"
         android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Hábitos" />
+        android:title="Metas" />
     <item
         android:id="@+id/nav_perfil"
         android:icon="@android:drawable/ic_menu_myplaces"

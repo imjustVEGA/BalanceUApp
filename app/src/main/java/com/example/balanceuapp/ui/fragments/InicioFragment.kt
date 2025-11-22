@@ -25,6 +25,7 @@ class InicioFragment : Fragment() {
     private lateinit var estadoAnimoViewModel: EstadoAnimoViewModel
     private lateinit var authViewModel: AuthViewModel
     private var selectedMood: TipoEstadoAnimo? = null
+    private lateinit var moodViews: Map<TipoEstadoAnimo, View>
     private var savedUserId: String? = null
 
     override fun onCreateView(
@@ -75,7 +76,7 @@ class InicioFragment : Fragment() {
     }
 
     private fun setupMoodSelector() {
-        val moodViews = mapOf(
+        moodViews = mapOf(
             TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
             TipoEstadoAnimo.FELIZ to binding.moodFeliz,
             TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
@@ -86,12 +87,12 @@ class InicioFragment : Fragment() {
         moodViews.forEach { (tipo, view) ->
             view.setOnClickListener {
                 selectedMood = tipo
-                updateMoodSelection(moodViews)
+                updateMoodSelection()
             }
         }
     }
 
-    private fun updateMoodSelection(moodViews: Map<TipoEstadoAnimo, View>) {
+    private fun updateMoodSelection() {
         moodViews.forEach { (tipo, view) ->
             val background = if (tipo == selectedMood) {
                 val drawable = GradientDrawable()
@@ -183,13 +184,7 @@ class InicioFragment : Fragment() {
                 binding.tvEstadoAnimo.text = estadoTexto
                 binding.tvEstadoAnimoIcon.text = estadoEmoji
                 selectedMood = estado.tipo
-                updateMoodSelection(mapOf(
-                    TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
-                    TipoEstadoAnimo.FELIZ to binding.moodFeliz,
-                    TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
-                    TipoEstadoAnimo.TRISTE to binding.moodTriste,
-                    TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
-                ))
+                updateMoodSelection()
                 binding.etNota.setText(estado.nota)
             } else {
                 binding.tvEstadoAnimo.text = "Sin registrar"
@@ -207,20 +202,15 @@ class InicioFragment : Fragment() {
 
         estadoAnimoViewModel.operacionExitosa.observe(viewLifecycleOwner) { exitoso ->
             if (exitoso == true) {
-                Snackbar.make(binding.root, "Nota guardada", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Registro guardado", Snackbar.LENGTH_SHORT).show()
                 binding.etNota.text?.clear()
                 selectedMood = null
-                updateMoodSelection(mapOf(
-                    TipoEstadoAnimo.ALEGRE to binding.moodMuyFeliz,
-                    TipoEstadoAnimo.FELIZ to binding.moodFeliz,
-                    TipoEstadoAnimo.NEUTRAL to binding.moodNeutral,
-                    TipoEstadoAnimo.TRISTE to binding.moodTriste,
-                    TipoEstadoAnimo.TERRIBLE to binding.moodMuyTriste
-                ))
+                updateMoodSelection()
+                savedUserId?.let { inicioViewModel.cargarResumenDelDia(it) }
             }
             if (exitoso != null) {
                 binding.btnGuardarEstadoAnimo.isEnabled = true
-                savedUserId?.let { inicioViewModel.cargarResumenDelDia(it) }
+                estadoAnimoViewModel.limpiarOperacionExitosa()
             }
         }
 

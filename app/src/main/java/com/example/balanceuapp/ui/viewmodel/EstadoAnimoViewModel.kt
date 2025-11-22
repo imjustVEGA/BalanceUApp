@@ -21,8 +21,8 @@ class EstadoAnimoViewModel(application: Application) : AndroidViewModel(applicat
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private val _operacionExitosa = MutableLiveData<Boolean>()
-    val operacionExitosa: LiveData<Boolean> = _operacionExitosa
+    private val _operacionExitosa = MutableLiveData<Boolean?>()
+    val operacionExitosa: LiveData<Boolean?> = _operacionExitosa
 
     fun registrarEstadoAnimo(estadoAnimo: EstadoAnimo) {
         viewModelScope.launch {
@@ -36,6 +36,10 @@ class EstadoAnimoViewModel(application: Application) : AndroidViewModel(applicat
                 _operacionExitosa.postValue(false)
             }
         }
+    }
+
+    fun limpiarOperacionExitosa() {
+        _operacionExitosa.postValue(null)
     }
 
     fun obtenerEstadoAnimoDelDia(usuarioId: String, fecha: Long) {
