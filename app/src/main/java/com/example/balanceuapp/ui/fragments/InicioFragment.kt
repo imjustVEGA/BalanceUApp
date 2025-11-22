@@ -2,6 +2,7 @@ package com.example.balanceuapp.ui.fragments
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +17,26 @@ import com.example.balanceuapp.databinding.FragmentInicioBinding
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
 import com.example.balanceuapp.ui.viewmodel.EstadoAnimoViewModel
 import com.example.balanceuapp.ui.viewmodel.InicioViewModel
+import com.example.balanceuapp.util.Constants
 import com.google.android.material.snackbar.Snackbar
+import java.util.Calendar
 
+/**
+ * Fragment principal que muestra el resumen del día:
+ * - Saludo personalizado según la hora
+ * - Selector de estado de ánimo
+ * - Resumen de hábitos completados
+ * - Frase motivacional
+ */
 class InicioFragment : Fragment() {
+    
     private var _binding: FragmentInicioBinding? = null
     private val binding get() = _binding!!
+    
     private lateinit var inicioViewModel: InicioViewModel
     private lateinit var estadoAnimoViewModel: EstadoAnimoViewModel
     private lateinit var authViewModel: AuthViewModel
+    
     private var selectedMood: TipoEstadoAnimo? = null
     private lateinit var moodViews: Map<TipoEstadoAnimo, View>
     private var savedUserId: String? = null
@@ -41,31 +54,53 @@ class InicioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         try {
-            inicioViewModel = ViewModelProvider(this)[InicioViewModel::class.java]
-            estadoAnimoViewModel = ViewModelProvider(this)[EstadoAnimoViewModel::class.java]
-            authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
-
-            setupMoodSelector()
-            setupListeners()
-            setupObservers()
-
-            val userId = authViewModel.obtenerUsuarioActual()
-            if (userId != null) {
-                setupSaludoPersonalizado()
-                inicioViewModel.startObservandoHabitosDelDia(userId)
-                inicioViewModel.cargarResumenDelDia(userId)
-                savedUserId = userId
-            } else {
-                Toast.makeText(requireContext(), "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
-            }
+            inicializarViewModels()
+            configurarUI()
+            cargarDatosDelUsuario()
         } catch (e: Exception) {
-            android.util.Log.e("InicioFragment", "Error en onViewCreated: ${e.message}", e)
-            Toast.makeText(requireContext(), "Error al cargar datos: ${e.message}", Toast.LENGTH_LONG).show()
+            Log.e(Constants.LogTags.INICIO_FRAGMENT, "Error en onViewCreated: ${e.message}", e)
+            Toast.makeText(requireContext(), "${Constants.ErrorMessages.ERROR_CARGAR_DATOS}: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
+    /**
+     * Inicializa los ViewModels necesarios.
+     */
+    private fun inicializarViewModels() {
+        inicioViewModel = ViewModelProvider(this)[InicioViewModel::class.java]
+        estadoAnimoViewModel = ViewModelProvider(this)[EstadoAnimoViewModel::class.java]
+        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+    }
+
+    /**
+     * Configura la UI: selector de estado de ánimo, listeners y observadores.
+     */
+    private fun configurarUI() {
+        setupMoodSelector()
+        setupListeners()
+        setupObservers()
+    }
+
+    /**
+     * Carga los datos del usuario autenticado.
+     */
+    private fun cargarDatosDelUsuario() {
+        val userId = authViewModel.obtenerUsuarioActual()
+        if (userId != null) {
+            setupSaludoPersonalizado()
+            inicioViewModel.startObservandoHabitosDelDia(userId)
+            inicioViewModel.cargarResumenDelDia(userId)
+            savedUserId = userId
+        } else {
+            Toast.makeText(requireContext(), Constants.ErrorMessages.ERROR_USUARIO_NO_AUTENTICADO, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Configura el saludo personalizado según la hora del día.
+     */
     private fun setupSaludoPersonalizado() {
-        val hora = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        val hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         val saludo = when (hora) {
             in 5..11 -> "¡Buenos días!"
             in 12..17 -> "¡Buenas tardes!"
@@ -117,30 +152,39 @@ class InicioFragment : Fragment() {
         }
     }
 
+    /**
+     * Configura los listeners de los botones y campos de entrada.
+     */
     private fun setupListeners() {
         binding.btnGuardarEstadoAnimo.setOnClickListener {
-            val tipo = selectedMood
-            if (tipo == null) {
-                Toast.makeText(requireContext(), "Selecciona un estado de ánimo", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            guardarEstadoAnimo()
+        }
+    }
 
-            val nota = binding.etNota.text.toString().trim()
-            val userId = authViewModel.obtenerUsuarioActual()
-
-            if (userId != null) {
-                binding.btnGuardarEstadoAnimo.isEnabled = false
-                animateSaveButton()
-                val estadoAnimo = EstadoAnimo(
-                    usuarioId = userId,
-                    tipo = tipo,
-                    nota = nota,
-                    fecha = System.currentTimeMillis()
-                )
-                estadoAnimoViewModel.registrarEstadoAnimo(estadoAnimo)
-            }
+    /**
+     * Guarda el estado de ánimo seleccionado por el usuario.
+     */
+    private fun guardarEstadoAnimo() {
+        val tipo = selectedMood
+        if (tipo == null) {
+            Toast.makeText(requireContext(), Constants.UIMessages.SELECCIONAR_ESTADO_ANIMO, Toast.LENGTH_SHORT).show()
+            return
         }
 
+        val nota = binding.etNota.text.toString().trim()
+        val userId = authViewModel.obtenerUsuarioActual()
+
+        if (userId != null) {
+            binding.btnGuardarEstadoAnimo.isEnabled = false
+            animateSaveButton()
+            val estadoAnimo = EstadoAnimo(
+                usuarioId = userId,
+                tipo = tipo,
+                nota = nota,
+                fecha = System.currentTimeMillis()
+            )
+            estadoAnimoViewModel.registrarEstadoAnimo(estadoAnimo)
+        }
     }
 
     private fun animateSaveButton() {
@@ -202,10 +246,8 @@ class InicioFragment : Fragment() {
 
         estadoAnimoViewModel.operacionExitosa.observe(viewLifecycleOwner) { exitoso ->
             if (exitoso == true) {
-                Snackbar.make(binding.root, "Registro guardado", Snackbar.LENGTH_SHORT).show()
-                binding.etNota.text?.clear()
-                selectedMood = null
-                updateMoodSelection()
+                Snackbar.make(binding.root, Constants.SuccessMessages.REGISTRO_GUARDADO, Snackbar.LENGTH_SHORT).show()
+                limpiarFormularioEstadoAnimo()
                 savedUserId?.let { inicioViewModel.cargarResumenDelDia(it) }
             }
             if (exitoso != null) {
@@ -223,10 +265,19 @@ class InicioFragment : Fragment() {
 
         inicioViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
-                android.util.Log.e("InicioFragment", "Error del ViewModel: $it")
+                Log.e(Constants.LogTags.INICIO_FRAGMENT, "Error del ViewModel: $it")
                 // No mostrar toast para errores menores, solo loguear
             }
         }
+    }
+
+    /**
+     * Limpia el formulario de estado de ánimo después de guardar.
+     */
+    private fun limpiarFormularioEstadoAnimo() {
+        binding.etNota.text?.clear()
+        selectedMood = null
+        updateMoodSelection()
     }
 
     override fun onDestroyView() {

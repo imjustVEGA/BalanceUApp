@@ -19,10 +19,17 @@ import com.example.balanceuapp.databinding.FragmentHabitosBinding
 import com.example.balanceuapp.databinding.ItemHabitoBinding
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
 import com.example.balanceuapp.ui.viewmodel.HabitoViewModel
+import com.example.balanceuapp.util.Constants
 
+/**
+ * Fragment que muestra y gestiona la lista de hábitos del usuario.
+ * Permite agregar, editar, eliminar y marcar hábitos como completados.
+ */
 class HabitosFragment : Fragment() {
+    
     private var _binding: FragmentHabitosBinding? = null
     private val binding get() = _binding!!
+    
     private lateinit var habitoViewModel: HabitoViewModel
     private lateinit var authViewModel: AuthViewModel
     private lateinit var adapter: HabitosAdapter
@@ -109,14 +116,14 @@ class HabitosFragment : Fragment() {
                 val descripcion = dialogBinding.etDescripcionHabito.text.toString().trim()
 
                 if (nombre.isEmpty()) {
-                    Toast.makeText(requireContext(), "El nombre es requerido", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), Constants.UIMessages.NOMBRE_REQUERIDO, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 val userId = authViewModel.obtenerUsuarioActual()
                 if (habito == null) {
                     if (userId == null) {
-                        Toast.makeText(requireContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), Constants.ErrorMessages.ERROR_USUARIO_NO_AUTENTICADO, Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }
                     val nuevoHabito = Habito(
@@ -140,10 +147,20 @@ class HabitosFragment : Fragment() {
         dialog.show()
     }
 
+    /**
+     * Muestra un diálogo de confirmación para eliminar un hábito.
+     * 
+     * @param habito Hábito a eliminar
+     */
+    /**
+     * Muestra un diálogo de confirmación para eliminar un hábito.
+     * 
+     * @param habito Hábito a eliminar
+     */
     private fun mostrarDialogoEliminar(habito: Habito) {
         AlertDialog.Builder(requireContext())
             .setTitle("Eliminar Hábito")
-            .setMessage("¿Estás seguro de eliminar \"${habito.nombre}\"?")
+            .setMessage(Constants.UIMessages.getEliminarHabitoConfirmacion(habito.nombre))
             .setPositiveButton("Eliminar") { _, _ ->
                 val userId = authViewModel.obtenerUsuarioActual()
                 if (userId != null) {
