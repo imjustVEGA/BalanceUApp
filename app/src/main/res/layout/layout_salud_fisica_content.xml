@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.balanceuapp.ui.fragments.CustomNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_soft"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💪 Entrenamientos"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:letterSpacing="0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Elige tu rutina de ejercicios"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Categoría: Grupo Muscular -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grupo Muscular"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Card: Torso -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTorso"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_torso"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivTorsoImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios de torso"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTorsoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Torso"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTorsoSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15 ejercicios • 30 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTorsoTitle" />
+
+                <TextView
+                    android:id="@+id/tvTorsoLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Intermedio"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTorsoSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card: Piernas -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPiernas"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_legs"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivLegsImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios de piernas"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLegsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Piernas"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLegsSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12 ejercicios • 25 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvLegsTitle" />
+
+                <TextView
+                    android:id="@+id/tvLegsLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Principiante"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvLegsSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Categoría: Objetivo del Entrenamiento -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Objetivo del Entrenamiento"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Card: Fuerza -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardFuerza"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_strength"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivStrengthImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios de fuerza"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvStrengthTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fuerza"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvStrengthSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18 ejercicios • 45 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStrengthTitle" />
+
+                <TextView
+                    android:id="@+id/tvStrengthLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avanzado"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStrengthSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card: Cardio -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCardio"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_cardio"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivCardioImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios de cardio"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCardioTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cardio"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCardioSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 ejercicios • 20 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardioTitle" />
+
+                <TextView
+                    android:id="@+id/tvCardioLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Principiante"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardioSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Categoría: Equipamiento -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Equipamiento"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Card: Sin Equipamiento -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNoEquipment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_no_equipment"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivNoEquipmentImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios sin equipamiento"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvNoEquipmentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin Equipamiento"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvNoEquipmentSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20 ejercicios • 15-30 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNoEquipmentTitle" />
+
+                <TextView
+                    android:id="@+id/tvNoEquipmentLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Todos los niveles"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNoEquipmentSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card: Con Pesas -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPesas"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_weights"
+                android:padding="20dp">
+
+                <!-- Imagen de fondo que cubre toda la tarjeta -->
+                <ImageView
+                    android:id="@+id/ivWeightsImage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.6"
+                    android:contentDescription="Imagen de ejercicios con pesas"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvWeightsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Con Pesas"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvWeightsSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14 ejercicios • 35 min"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.9"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWeightsTitle" />
+
+                <TextView
+                    android:id="@+id/tvWeightsLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Intermedio"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/badge_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWeightsSubtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</com.example.balanceuapp.ui.fragments.CustomNestedScrollView>

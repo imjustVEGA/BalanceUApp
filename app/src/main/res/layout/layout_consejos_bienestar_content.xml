@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.balanceuapp.ui.fragments.CustomNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_soft"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✨ Consejos de Bienestar"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:letterSpacing="0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Pequeños cambios para una vida más saludable"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- TODOS LOS CONSEJOS ORIGINALES PRESERVADOS -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/primary_green_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💧 Hidratación"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mantén tu cuerpo hidratado bebiendo al menos 8 vasos de agua al día. La hidratación adecuada es esencial para tu bienestar físico."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/secondary_teal_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😴 Descanso"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Asegúrate de dormir entre 7-9 horas cada noche. El descanso adecuado es fundamental para la recuperación y el rendimiento físico."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/accent_sage">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🥗 Nutrición Balanceada"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Combina una dieta rica en frutas, verduras, proteínas magras y granos integrales. Una buena nutrición es esencial para mantener tu energía y salud física."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/accent_mint">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="☀️ Exposición Solar"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pasa tiempo al aire libre para obtener vitamina D natural. 15-20 minutos de exposición solar moderada pueden mejorar tu estado de ánimo y salud ósea."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</com.example.balanceuapp.ui.fragments.CustomNestedScrollView>
+

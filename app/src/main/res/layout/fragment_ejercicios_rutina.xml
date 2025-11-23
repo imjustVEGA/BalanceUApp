@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Área superior con ilustración/video -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/bottomSection"
+        android:background="#F5F5F5">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <!-- Placeholder para ilustración -->
+        <View
+            android:id="@+id/illustrationPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+
+        <!-- Controles superiores -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/buttonBackTop"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="#666666"
+                android:contentDescription="Regresar" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/buttonVideo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_media_play"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:tint="#666666"
+                    android:contentDescription="Video" />
+
+                <ImageButton
+                    android:id="@+id/buttonSound"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_lock_silent_mode"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:tint="#666666"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Sonido" />
+
+                <ImageButton
+                    android:id="@+id/buttonMusic"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_media_play"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:tint="#666666"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Música" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Botones de feedback -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:background="#80FFFFFF"
+            android:padding="8dp">
+
+            <ImageButton
+                android:id="@+id/buttonThumbsDown"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_compass"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="#666666"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="No me gusta" />
+
+            <ImageButton
+                android:id="@+id/buttonThumbsUp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_compass"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="#666666"
+                android:contentDescription="Me gusta" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Sección inferior con información y controles -->
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="24dp"
+        android:elevation="8dp">
+
+        <!-- Nombre del ejercicio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/textExerciseName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SALTOS DE TIJERA"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:letterSpacing="0.05" />
+
+        </LinearLayout>
+
+        <!-- Contenedor del Timer (para ejercicios por tiempo) -->
+        <LinearLayout
+            android:id="@+id/containerTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Timer grande -->
+            <TextView
+                android:id="@+id/textTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:30"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:paddingVertical="16dp" />
+
+            <!-- Botón de pausa/continuar -->
+            <Button
+                android:id="@+id/buttonPausa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PAUSAR"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
+                android:letterSpacing="0.1"
+                android:elevation="4dp" />
+
+        </LinearLayout>
+
+        <!-- Contenedor de Repeticiones (para ejercicios por repeticiones) -->
+        <LinearLayout
+            android:id="@+id/containerRepeticiones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Contador de repeticiones -->
+            <TextView
+                android:id="@+id/textRepeticiones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="x6"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:paddingVertical="16dp" />
+
+            <!-- Botón DONE -->
+            <Button
+                android:id="@+id/buttonDone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✓ COMPLETADO"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
+                android:letterSpacing="0.1"
+                android:elevation="4dp" />
+
+        </LinearLayout>
+
+        <!-- Botones de navegación -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/buttonAnterior"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Anterior"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:gravity="center"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:drawableStart="@android:drawable/ic_media_rew"
+                android:drawablePadding="8dp"
+                android:background="?attr/selectableItemBackground" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#E0E0E0"
+                android:layout_marginHorizontal="8dp" />
+
+            <TextView
+                android:id="@+id/buttonSiguiente"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Saltar"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:drawableEnd="@android:drawable/ic_media_ff"
+                android:drawablePadding="8dp"
+                android:background="?attr/selectableItemBackground" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

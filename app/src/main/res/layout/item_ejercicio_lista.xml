@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical">
+
+    <!-- Icono de reordenar -->
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:tint="#999999"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Reordenar" />
+
+    <!-- Ilustración del ejercicio (placeholder) -->
+    <View
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#E0E0E0"
+        android:layout_marginEnd="16dp" />
+
+    <!-- Información del ejercicio -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textNombreEjercicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del ejercicio"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/textDuracionEjercicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30 seg"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:paddingTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- Icono de cambiar -->
+
+</LinearLayout>
