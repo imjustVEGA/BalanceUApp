@@ -34,6 +34,10 @@
     <color name="success_green">#4CAF50</color>
     <color name="error_soft">#EF5350</color>
     <color name="warning_soft">#FFB74D</color>
+    <color name="switch_thumb_done">#4CAF50</color>
+    <color name="switch_thumb_pending">#CFD8DC</color>
+    <color name="switch_track_done">#C8E6C9</color>
+    <color name="switch_track_pending">#ECEFF1</color>
     
     <!-- Colores para estados de ánimo -->
     <color name="mood_very_happy">#FFD54F</color>

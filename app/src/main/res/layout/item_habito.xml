@@ -18,13 +18,14 @@
         android:gravity="center_vertical"
         android:padding="20dp">
 
-        <!-- Checkbox -->
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/cbCompletado"
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchCompletado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/primary_green"
-            android:layout_marginEnd="16dp" />
+            android:showText="false"
+            android:layout_marginEnd="16dp"
+            android:thumbTint="@color/switch_thumb_pending"
+            android:trackTint="@color/switch_track_pending" />
 
         <!-- Contenido -->
         <LinearLayout
@@ -56,19 +57,38 @@
                 tools:text="Hacer ejercicio por 30 minutos cada mañana" />
         </LinearLayout>
 
-        <!-- Botón eliminar -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEliminar"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eliminar"
-            android:textColor="@color/error_soft"
-            android:textSize="12sp"
-            app:icon="@android:drawable/ic_menu_delete"
-            app:iconTint="@color/error_soft"
-            app:iconGravity="textStart"
-            app:iconSize="16dp" />
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar"
+                android:textColor="@color/primary_green"
+                android:textSize="12sp"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:iconTint="@color/primary_green"
+                app:iconGravity="textStart"
+                app:iconSize="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Eliminar"
+                android:textColor="@color/error_soft"
+                android:textSize="12sp"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="@color/error_soft"
+                app:iconGravity="textStart"
+                app:iconSize="16dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

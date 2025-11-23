@@ -2,6 +2,7 @@ package com.example.balanceuapp.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -15,9 +16,15 @@ import com.example.balanceuapp.databinding.ActivityAuthBinding
 import com.example.balanceuapp.ui.auth.LoginFragment
 import com.example.balanceuapp.ui.auth.RegisterFragment
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
+import com.example.balanceuapp.util.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 
+/**
+ * Activity que maneja la autenticación de usuarios (login y registro).
+ * Utiliza un ViewPager2 con tabs para alternar entre login y registro.
+ */
 class AuthActivity : AppCompatActivity() {
+    
     private lateinit var binding: ActivityAuthBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -30,7 +37,7 @@ class AuthActivity : AppCompatActivity() {
             setupViewPager()
             setupObservers()
         } catch (e: Exception) {
-            android.util.Log.e("AuthActivity", "Error en onCreate: ${e.message}", e)
+            Log.e(Constants.LogTags.AUTH_ACTIVITY, "Error en onCreate: ${e.message}", e)
             Toast.makeText(
                 this,
                 "Error al inicializar: ${e.message}",
@@ -40,6 +47,9 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Configura el ViewPager2 con los fragments de login y registro.
+     */
     private fun setupViewPager() {
         val adapter = AuthPagerAdapter(this)
         binding.viewPager.adapter = adapter
@@ -53,11 +63,14 @@ class AuthActivity : AppCompatActivity() {
         }.attach()
     }
 
+    /**
+     * Configura los observadores de LiveData del ViewModel.
+     */
     private fun setupObservers() {
         viewModel.loginResult.observe(this) { result ->
             binding.progressBar.visibility = View.GONE
             result.onSuccess { userId ->
-                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, Constants.SuccessMessages.LOGIN_EXITOSO, Toast.LENGTH_SHORT).show()
                 navigateToMain()
             }.onFailure { exception ->
                 Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
@@ -67,7 +80,7 @@ class AuthActivity : AppCompatActivity() {
         viewModel.registroResult.observe(this) { result ->
             binding.progressBar.visibility = View.GONE
             result.onSuccess { userId ->
-                Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, Constants.SuccessMessages.REGISTRO_EXITOSO, Toast.LENGTH_SHORT).show()
                 navigateToMain()
             }.onFailure { exception ->
                 Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
@@ -75,10 +88,16 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Muestra el indicador de progreso.
+     */
     fun showProgress() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
+    /**
+     * Navega a la MainActivity y limpia el stack de actividades.
+     */
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -86,8 +105,12 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Adapter para el ViewPager2 que maneja los fragments de autenticación.
+     */
     private class AuthPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
+        
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
