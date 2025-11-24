@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_green">
+
+    <!-- Contenido centrado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/textTituloDescanso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DESCANSO"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="48dp" />
+
+        <!-- Cronómetro grande -->
+        <TextView
+            android:id="@+id/textCronometroDescanso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01:00"
+            android:textSize="96sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="48dp" />
+
+        <!-- Mensaje motivacional -->
+        <TextView
+            android:id="@+id/textMensajeDescanso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tómate un momento para recuperarte"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:alpha="0.9"
+            android:layout_marginBottom="64dp"
+            android:gravity="center" />
+
+        <!-- Botón para aumentar tiempo -->
+        <Button
+            android:id="@+id/buttonAumentarTiempo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+10 seg"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_green"
+            android:background="@color/white"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="16dp"
+            android:layout_marginBottom="32dp"
+            android:elevation="4dp"
+            android:letterSpacing="0.05" />
+
+        <!-- Botón para saltar descanso -->
+        <TextView
+            android:id="@+id/buttonSaltarDescanso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saltar descanso"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:alpha="0.8"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+

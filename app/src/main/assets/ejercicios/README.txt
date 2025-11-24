@@ -51,3 +51,4 @@ NOTAS:
 - La imagen se ajustará automáticamente para que quepa completamente en el espacio disponible
 
 
+

@@ -48,15 +48,6 @@
             android:padding="16dp"
             android:gravity="center_vertical">
 
-            <ImageButton
-                android:id="@+id/buttonBackTop"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@android:drawable/ic_menu_revert"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="#666666"
-                android:contentDescription="Regresar" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -95,6 +86,24 @@
             </LinearLayout>
 
         </LinearLayout>
+        
+        <!-- Nombre del ejercicio en la parte superior -->
+        <TextView
+            android:id="@+id/textExerciseNameTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="EJERCICIO"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#40000000" />
 
         <!-- Botones de feedback -->
         <LinearLayout
@@ -140,6 +149,8 @@
         android:padding="24dp"
         android:elevation="8dp">
 
+        <!-- ImageView para GIF del ejercicio - Movido más arriba -->
+
         <!-- Nombre del ejercicio -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,7 +168,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:letterSpacing="0.05" />
+                android:letterSpacing="0.05"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -200,7 +212,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:padding="16dp"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="@color/primary_green"
                 android:textColor="@android:color/white"
                 android:letterSpacing="0.1"
                 android:elevation="4dp" />
@@ -236,7 +248,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:padding="16dp"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="@color/primary_green"
                 android:textColor="@android:color/white"
                 android:letterSpacing="0.1"
                 android:elevation="4dp" />
@@ -293,5 +305,25 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageViewGifBottom"
+        android:layout_width="match_parent"
+        android:layout_height="288dp"
+        android:layout_above="@+id/containerMedia"
+        android:layout_marginBottom="60dp"
+        android:adjustViewBounds="true"
+        android:background="#F5F5F5"
+        android:contentDescription="GIF del ejercicio"
+        android:scaleType="fitCenter" />
+
+    <ImageButton
+        android:id="@+id/buttonBackTop"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Regresar"
+        android:src="@android:drawable/ic_menu_revert"
+        android:tint="#666666" />
 
 </RelativeLayout>

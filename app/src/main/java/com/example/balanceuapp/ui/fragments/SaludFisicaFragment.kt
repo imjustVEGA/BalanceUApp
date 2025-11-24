@@ -110,6 +110,9 @@ class SaludFisicaContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Actualizar información de ejercicios y duración en las cards
+        actualizarInformacionCards(view)
+
         // Cargar imágenes de las cards desde assets
         cargarImagenesCards(view)
 
@@ -118,6 +121,198 @@ class SaludFisicaContentFragment : Fragment() {
 
         // Configurar click listeners para cada card de ejercicio
         configurarCardsEjercicios(view)
+    }
+    
+    private fun actualizarInformacionCards(view: View) {
+        // Usar la misma lógica que EjerciciosDetalleFragment para calcular ejercicios y duración
+        val categorias = mapOf(
+            "Torso" to "torso",
+            "Piernas" to "piernas",
+            "Fuerza" to "fuerza",
+            "Cardio" to "cardio",
+            "Sin Equipamiento" to "sin equipamiento",
+            "Con Pesas" to "con pesas"
+        )
+        
+        categorias.forEach { (nombreCategoria, tipoRutina) ->
+            val ejercicios = generarEjercicios(tipoRutina)
+            val duracionTotal = calcularDuracionTotal(ejercicios)
+            val numEjercicios = ejercicios.size
+            
+            // Actualizar el subtítulo correspondiente
+            when (nombreCategoria) {
+                "Torso" -> view.findViewById<TextView>(R.id.tvTorsoSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+                "Piernas" -> view.findViewById<TextView>(R.id.tvLegsSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+                "Fuerza" -> view.findViewById<TextView>(R.id.tvStrengthSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+                "Cardio" -> view.findViewById<TextView>(R.id.tvCardioSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+                "Sin Equipamiento" -> view.findViewById<TextView>(R.id.tvNoEquipmentSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+                "Con Pesas" -> view.findViewById<TextView>(R.id.tvWeightsSubtitle)?.text = "$numEjercicios ejercicios • $duracionTotal min"
+            }
+        }
+    }
+    
+    private fun crearEjercicio(nombre: String, duracion: String, descripcion: String, duracionSegundos: Int = 30, instrucciones: String = ""): Ejercicio {
+        // Detectar si es por repeticiones (contiene "x" o "repeticiones")
+        val esRepeticiones = duracion.contains("x", ignoreCase = true) || 
+                             duracion.contains("repeticiones", ignoreCase = true)
+        
+        val instruccionesFinales = if (instrucciones.isNotEmpty()) instrucciones else descripcion
+        
+        if (esRepeticiones) {
+            // Extraer número de repeticiones
+            val regex = Regex("(\\d+)")
+            val match = regex.find(duracion)
+            val repeticiones = match?.value?.toIntOrNull() ?: 0
+            return Ejercicio(nombre, duracion, descripcion, "", 0, true, repeticiones, instruccionesFinales)
+        }
+        return Ejercicio(nombre, duracion, descripcion, "", duracionSegundos, false, 0, instruccionesFinales)
+    }
+    
+    private fun generarEjercicios(tipoRutina: String): List<Ejercicio> {
+        // Usar la misma lógica que EjerciciosDetalleFragment
+        val todosEjercicios = when (tipoRutina.lowercase()) {
+            "torso" -> listOf(
+                crearEjercicio("Flexiones", "30 seg", "Realiza flexiones manteniendo el cuerpo recto", 30),
+                crearEjercicio("Plancha", "45 seg", "Mantén la posición de plancha con el cuerpo recto", 45),
+                crearEjercicio("Fondos de tríceps", "30 seg", "Realiza fondos usando una silla o banco", 30),
+                crearEjercicio("Abdominales", "30 seg", "Contrae el abdomen levantando el torso", 30),
+                crearEjercicio("Flexiones inclinadas", "30 seg", "Flexiones con pies elevados para mayor intensidad", 30),
+                crearEjercicio("Plancha lateral", "30 seg cada lado", "Mantén la plancha de lado para trabajar oblicuos", 30),
+                crearEjercicio("Superman", "30 seg", "Acostado boca abajo, levanta brazos y piernas", 30),
+                crearEjercicio("Mountain climbers", "30 seg", "Alterna las piernas como corriendo en posición de plancha", 30),
+                crearEjercicio("Burpees", "30 seg", "Salto, flexión y vuelta a posición inicial", 30),
+                crearEjercicio("Flexiones diamante", "30 seg", "Flexiones con manos en forma de diamante", 30),
+                crearEjercicio("Abdominales bicicleta", "30 seg", "Simula pedaleo acostado para trabajar el core", 30)
+            )
+            "piernas" -> listOf(
+                Ejercicio("Zancadas", "30 seg cada pierna", "Da un paso largo y baja la rodilla trasera", "", 30),
+                Ejercicio("Elevaciones de talón", "30 seg", "Levántate sobre las puntas de los pies", "", 30),
+                Ejercicio("Sentadilla sumo", "30 seg", "Sentadilla con piernas abiertas", "", 30),
+                Ejercicio("Sentadillas con salto", "30 seg", "Sentadillas explosivas con salto", "", 30),
+                Ejercicio("Elevaciones de pierna lateral", "30 seg", "Eleva la pierna lateralmente de pie", "", 30),
+                Ejercicio("Wall sit", "45 seg", "Mantén posición de sentadilla contra la pared", "", 45),
+                Ejercicio("Glute bridge", "30 seg", "Eleva la cadera acostado boca arriba", "", 30)
+            )
+            "fuerza" -> listOf(
+                crearEjercicio("Peso muerto", "x10", "Levanta el peso manteniendo la espalda recta"),
+                crearEjercicio("Sentadillas con peso", "x12", "Sentadillas con barra o mancuernas"),
+                crearEjercicio("Press militar", "x10", "Empuja el peso por encima de la cabeza"),
+                crearEjercicio("Remo con barra", "x12", "Tira la barra hacia el pecho"),
+                crearEjercicio("Press inclinado", "x12", "Press de banca en banco inclinado"),
+                crearEjercicio("Peso muerto rumano", "x10", "Variación de peso muerto con énfasis en isquiotibiales"),
+                crearEjercicio("Sentadillas frontales", "x12", "Sentadillas con barra al frente"),
+                crearEjercicio("Remo T", "x12", "Remo con barra en posición T"),
+                crearEjercicio("Curl de bíceps con barra", "x12", "Flexión de brazos con barra"),
+                crearEjercicio("Extensiones de tríceps", "x12", "Extiende los brazos trabajando tríceps"),
+                crearEjercicio("Curl martillo", "x12", "Curl de bíceps con agarre neutro")
+            )
+            "cardio" -> listOf(
+                crearEjercicio("Burpees", "30 seg", "Salto, flexión y vuelta a posición inicial", 30),
+                crearEjercicio("Mountain climbers", "30 seg", "Alterna las piernas como corriendo en posición de plancha", 30),
+                crearEjercicio("Jumping jacks", "30 seg", "Salta abriendo piernas y brazos", 30),
+                crearEjercicio("High knees", "30 seg", "Corre en el lugar levantando las rodillas", 30),
+                crearEjercicio("Jump squats", "30 seg", "Salta desde posición de sentadilla", 30),
+                crearEjercicio("Escaladores", "30 seg", "Mountain climbers a alta velocidad", 30),
+                crearEjercicio("Skipping", "30 seg", "Corre en el lugar con rodillas altas", 30)
+            )
+            "sin equipamiento" -> listOf(
+                crearEjercicio("Flexiones", "30 seg", "Ejercicio básico para pecho y brazos", 30),
+                crearEjercicio("Sentadillas", "30 seg", "Ejercicio fundamental para piernas", 30),
+                crearEjercicio("Plancha", "45 seg", "Fortalece el core", 45),
+                crearEjercicio("Abdominales", "30 seg", "Fortalece el abdomen", 30),
+                crearEjercicio("Burpees", "30 seg", "Ejercicio completo de cuerpo", 30),
+                crearEjercicio("Mountain climbers", "30 seg", "Cardio intenso en posición de plancha", 30),
+                crearEjercicio("Jumping jacks", "30 seg", "Salto con apertura de piernas y brazos", 30),
+                crearEjercicio("Zancadas", "30 seg cada pierna", "Fortalece piernas y glúteos", 30),
+                crearEjercicio("Plancha lateral", "30 seg cada lado", "Fortalece oblicuos", 30),
+                crearEjercicio("Elevaciones de pierna", "30 seg", "Fortalece abdominales inferiores", 30),
+                crearEjercicio("Superman", "30 seg", "Fortalece espalda baja", 30),
+                crearEjercicio("Glute bridge", "30 seg", "Fortalece glúteos y cadera", 30),
+                crearEjercicio("Sentadillas con salto", "30 seg", "Cardio y fuerza para piernas", 30),
+                crearEjercicio("Wall sit", "45 seg", "Isométrico para piernas", 45),
+                crearEjercicio("High knees", "30 seg", "Cardio para piernas", 30),
+                crearEjercicio("Jump squats", "30 seg", "Sentadillas explosivas", 30),
+                crearEjercicio("Escaladores", "30 seg", "Cardio intenso", 30),
+                crearEjercicio("Skipping", "30 seg", "Corre en el lugar", 30),
+                crearEjercicio("Elevaciones de talón", "30 seg", "Fortalece pantorrillas", 30),
+                crearEjercicio("Abdominales bicicleta", "30 seg", "Fortalece core", 30)
+            )
+            "con pesas" -> listOf(
+                crearEjercicio("Press de banca", "x10", "Ejercicio fundamental para pecho"),
+                crearEjercicio("Peso muerto", "x10", "Ejercicio completo para espalda y piernas"),
+                crearEjercicio("Sentadillas con peso", "x12", "Fortalece piernas con peso adicional"),
+                crearEjercicio("Remo con barra", "x12", "Fortalece espalda"),
+                crearEjercicio("Press militar", "x10", "Fortalece hombros"),
+                crearEjercicio("Curl de bíceps", "x12", "Fortalece bíceps"),
+                crearEjercicio("Extensiones de tríceps", "x12", "Fortalece tríceps"),
+                crearEjercicio("Press inclinado", "x12", "Fortalece pecho superior"),
+                crearEjercicio("Peso muerto rumano", "x10", "Fortalece isquiotibiales"),
+                crearEjercicio("Sentadillas frontales", "x12", "Variación de sentadillas"),
+                crearEjercicio("Remo T", "x12", "Fortalece espalda media"),
+                crearEjercicio("Curl martillo", "x12", "Fortalece bíceps y antebrazos"),
+                crearEjercicio("Elevaciones laterales", "x12", "Fortalece hombros"),
+                crearEjercicio("Elevaciones frontales", "x12", "Fortalece deltoides anterior")
+            )
+            else -> emptyList()
+        }
+        
+        // Filtrar solo los ejercicios que tienen imágenes (igual que en EjerciciosDetalleFragment)
+        return todosEjercicios.filter { ejercicio ->
+            ejercicioTieneImagen(ejercicio.nombre, tipoRutina)
+        }
+    }
+    
+    private fun calcularDuracionTotal(ejercicios: List<Ejercicio>): Int {
+        // Usar la misma lógica que EjerciciosDetalleFragment
+        var totalSegundos = 0
+        ejercicios.forEach { ejercicio ->
+            if (ejercicio.esPorRepeticiones) {
+                // Estimar tiempo para ejercicios por repeticiones
+                // Aproximadamente 3 segundos por repetición (más realista)
+                totalSegundos += ejercicio.repeticiones * 3
+            } else {
+                totalSegundos += ejercicio.duracionSegundos
+            }
+        }
+        // Convertir a minutos y redondear hacia arriba
+        return kotlin.math.ceil(totalSegundos / 60.0).toInt().coerceAtLeast(1)
+    }
+    
+    private fun ejercicioTieneImagen(nombreEjercicio: String, tipoRutina: String): Boolean {
+        val context = context ?: return false
+        
+        val carpetaCategoria = when (tipoRutina.lowercase()) {
+            "torso" -> "torso"
+            "piernas" -> "piernas"
+            "fuerza" -> "fuerza"
+            "cardio" -> "cardio"
+            "sin equipamiento" -> "sin_equipamiento"
+            "con pesas" -> "con_pesas"
+            else -> null
+        }
+        
+        if (carpetaCategoria == null) return false
+        
+        val nombreArchivo = nombreEjercicio.lowercase()
+            .replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+            .replace("ñ", "n").replace("ü", "u")
+            .replace(" ", "_")
+            .replace("cada lado", "")
+            .replace("(", "").replace(")", "")
+            .replace("__", "_")
+            .trim()
+        
+        val extensiones = listOf(".png", ".jpg", ".jpeg", ".webp")
+        
+        for (ext in extensiones) {
+            try {
+                val ruta = "ejercicios/$carpetaCategoria/$nombreArchivo$ext"
+                context.assets.open(ruta).use { return true }
+            } catch (e: IOException) {
+                // Continuar con el siguiente nombre o extensión
+            }
+        }
+        return false
     }
     
     private fun configurarFiltrosEjercicios(view: View) {
@@ -373,7 +568,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardTorso)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Torso",
-                "15 ejercicios • 30 min • Intermedio",
+                "11 ejercicios • 6 min • Intermedio",
                 "Rutina completa para fortalecer el torso, incluyendo ejercicios para pecho, espalda y core."
             )
         }
@@ -382,7 +577,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardPiernas)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Piernas",
-                "12 ejercicios • 25 min • Principiante",
+                "8 ejercicios • 5 min • Principiante",
                 "Rutina enfocada en fortalecer y tonificar las piernas, incluyendo cuádriceps, glúteos y pantorrillas."
             )
         }
@@ -391,7 +586,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardFuerza)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Fuerza",
-                "18 ejercicios • 45 min • Avanzado",
+                "13 ejercicios • 8 min • Avanzado",
                 "Entrenamiento intenso de fuerza para desarrollar masa muscular y potencia."
             )
         }
@@ -400,7 +595,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardCardio)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Cardio",
-                "10 ejercicios • 20 min • Principiante",
+                "7 ejercicios • 4 min • Principiante",
                 "Rutina cardiovascular para mejorar la resistencia y quemar calorías."
             )
         }
@@ -409,7 +604,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardNoEquipment)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Sin Equipamiento",
-                "20 ejercicios • 15-30 min • Todos los niveles",
+                "15 ejercicios • 8 min • Todos los niveles",
                 "Rutina completa que puedes hacer en casa sin necesidad de equipamiento especial."
             )
         }
@@ -418,7 +613,7 @@ class SaludFisicaContentFragment : Fragment() {
         view.findViewById<View>(com.example.balanceuapp.R.id.cardPesas)?.setOnClickListener {
             navigateToEjerciciosDetalle(
                 "Con Pesas",
-                "14 ejercicios • 35 min • Intermedio",
+                "12 ejercicios • 8 min • Intermedio",
                 "Entrenamiento con pesas para desarrollar fuerza y tonificar los músculos."
             )
         }
