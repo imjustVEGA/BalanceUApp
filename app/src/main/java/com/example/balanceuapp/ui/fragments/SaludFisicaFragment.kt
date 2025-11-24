@@ -236,15 +236,28 @@ class SaludFisicaContentFragment : Fragment() {
             "Yoga" to null // Yoga se maneja de forma especial (navegación directa)
         )
         
+        // SIEMPRE ocultar ejercicios de yoga primero cuando se cambia de filtro
+        ocultarEjerciciosYoga(view)
+        
         // Si es Yoga, mostrar cards de ejercicios individuales de yoga
         if (categorias.contains("Yoga")) {
             // Ocultar todas las cards normales
             mapeoCards.values.forEach { cardId ->
                 cardId?.let { view.findViewById<View>(it)?.visibility = View.GONE }
             }
+            // Ocultar títulos de sección y header cuando se muestra Yoga
+            ocultarTitulosYHeader(view)
             // Mostrar cards de ejercicios de yoga
             mostrarEjerciciosYoga(view)
             return
+        }
+        
+        // Si hay categorías específicas (Fuerza, Cardio), ocultar títulos y header
+        if (categorias.isNotEmpty()) {
+            ocultarTitulosYHeader(view)
+        } else {
+            // Si es "Para ti", mostrar todo incluyendo títulos y header
+            mostrarTitulosYHeader(view)
         }
         
         // Ocultar todas las cards primero
@@ -266,6 +279,93 @@ class SaludFisicaContentFragment : Fragment() {
                 }
             }
         }
+    }
+    
+    private fun ocultarTitulosYHeader(view: View) {
+        // Buscar el contenedor principal (LinearLayout dentro del ScrollView)
+        val container = buscarContenedorPrincipal(view)
+        container?.let { cont ->
+            // Recorrer todos los hijos del contenedor
+            for (i in 0 until cont.childCount) {
+                val child = cont.getChildAt(i)
+                // Omitir los botones de filtro y los ejercicios de yoga
+                if (child.tag == "filtros_buttons" || child.tag == "yoga_exercises") {
+                    continue
+                }
+                
+                // Si es un LinearLayout (header), verificar si contiene "Entrenamientos"
+                if (child is LinearLayout && child.orientation == LinearLayout.VERTICAL) {
+                    val tieneHeader = buscarTextViewConTexto(child, "Entrenamientos")
+                    if (tieneHeader) {
+                        child.visibility = View.GONE
+                        continue
+                    }
+                }
+                
+                // Si es un TextView, verificar si es un título de sección
+                if (child is TextView) {
+                    val texto = child.text.toString()
+                    // Títulos de sección: "Grupo Muscular", "Objetivo del Entrenamiento", "Equipamiento"
+                    val esTituloSeccion = texto == "Grupo Muscular" || 
+                                        texto == "Objetivo del Entrenamiento" || 
+                                        texto == "Equipamiento" ||
+                                        texto == "💪 Entrenamientos" ||
+                                        texto == "Elige tu rutina de ejercicios"
+                    
+                    if (esTituloSeccion) {
+                        // Verificar que no sea parte de una card
+                        val esParteDeCard = esParteDeCard(child)
+                        if (!esParteDeCard) {
+                            child.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private fun mostrarTitulosYHeader(view: View) {
+        // Buscar el contenedor principal
+        val container = buscarContenedorPrincipal(view)
+        container?.let { cont ->
+            // Recorrer todos los hijos del contenedor
+            for (i in 0 until cont.childCount) {
+                val child = cont.getChildAt(i)
+                // Omitir los botones de filtro y los ejercicios de yoga
+                if (child.tag == "filtros_buttons" || child.tag == "yoga_exercises") {
+                    continue
+                }
+                // Mostrar todos los demás elementos
+                child.visibility = View.VISIBLE
+            }
+        }
+    }
+    
+    private fun buscarTextViewConTexto(viewGroup: ViewGroup, texto: String): Boolean {
+        for (i in 0 until viewGroup.childCount) {
+            val child = viewGroup.getChildAt(i)
+            if (child is TextView && child.text.contains(texto)) {
+                return true
+            }
+            if (child is ViewGroup) {
+                if (buscarTextViewConTexto(child, texto)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    private fun esParteDeCard(view: View): Boolean {
+        // Verificar si el TextView está dentro de una MaterialCardView
+        var parent = view.parent
+        while (parent != null && parent is View) {
+            if (parent is com.google.android.material.card.MaterialCardView) {
+                return true
+            }
+            parent = parent.parent
+        }
+        return false
     }
     
     private fun configurarCardsEjercicios(view: View) {
@@ -398,11 +498,27 @@ class SaludFisicaContentFragment : Fragment() {
         }
     }
 
+    private fun ocultarEjerciciosYoga(view: View) {
+        // Buscar y eliminar el layout de ejercicios de yoga si existe
+        val containerEjercicios = buscarContenedorParaYoga(view)
+        containerEjercicios?.let { container ->
+            // Buscar el layout de yoga y eliminarlo
+            var layoutYogaExistente: ViewGroup? = null
+            for (i in 0 until container.childCount) {
+                val child = container.getChildAt(i)
+                if (child is ViewGroup && child.tag == "yoga_exercises") {
+                    layoutYogaExistente = child
+                    break
+                }
+            }
+            layoutYogaExistente?.let { container.removeView(it) }
+        }
+    }
+    
     private fun mostrarEjerciciosYoga(view: View) {
         // Lista de ejercicios de yoga individuales
         val ejerciciosYoga = listOf(
             "Postura de la montaña" to "60 seg",
-            "Saludo al sol" to "90 seg",
             "Postura del guerrero I" to "45 seg cada lado",
             "Postura del guerrero II" to "45 seg cada lado",
             "Postura del árbol" to "60 seg cada lado",
@@ -499,23 +615,92 @@ class SaludFisicaContentFragment : Fragment() {
     }
     
     private fun crearCardEjercicioYoga(nombre: String, duracion: String): View {
-        // Crear una card simple para cada ejercicio de yoga
-        val card = android.widget.LinearLayout(requireContext()).apply {
-            orientation = LinearLayout.HORIZONTAL
+        // Mapeo de nombres de ejercicios a nombres de archivos de imágenes
+        val mapeoImagenes = mapOf(
+            "Postura de la montaña" to "yoga_montana",
+            "Postura del guerrero I" to "yoga_guerrero_1",
+            "Postura del guerrero II" to "yoga_guerrero_2",
+            "Postura del árbol" to "yoga_arbol",
+            "Postura del perro boca abajo" to "yoga_perro_boca_abajo",
+            "Postura del niño" to "yoga_nino",
+            "Postura de la cobra" to "yoga_cobra",
+            "Postura del puente" to "yoga_puente",
+            "Postura de la torsión sentada" to "yoga_torsion",
+            "Postura del triángulo" to "yoga_triangulo",
+            "Postura del cadáver" to "yoga_cadaver"
+        )
+        
+        // Crear una card mejorada para cada ejercicio de yoga con imagen usando MaterialCardView
+        val card = com.google.android.material.card.MaterialCardView(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
                 setMargins(0, 8, 0, 8)
             }
-            setPadding(24, 20, 24, 20)
-            setBackgroundColor(android.graphics.Color.parseColor("#F5F5F5"))
-            elevation = 4f
-            
+            cardElevation = 4f
+            radius = 12f * resources.displayMetrics.density // Convertir dp a px
+            setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
             setOnClickListener {
                 // Navegar al ejercicio individual de yoga
                 navigateToEjercicioYogaIndividual(nombre, duracion)
             }
+        }
+        
+        // Contenedor interno para el contenido de la card
+        val cardContent = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(16, 16, 16, 16)
+        }
+        
+        // ImageView para la imagen del ejercicio con bordes redondeados
+        val imageView = ImageView(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                (100 * resources.displayMetrics.density).toInt(), // 100dp
+                (100 * resources.displayMetrics.density).toInt()  // 100dp
+            ).apply {
+                setMargins(0, 0, 16, 0)
+            }
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            // Agregar bordes redondeados usando un drawable
+            val radius = 8f * resources.displayMetrics.density
+            val shape = android.graphics.drawable.GradientDrawable().apply {
+                setCornerRadius(radius)
+                setColor(android.graphics.Color.parseColor("#E0E0E0"))
+            }
+            background = shape
+            clipToOutline = true
+        }
+        
+        // Intentar cargar la imagen desde assets
+        val nombreImagen = mapeoImagenes[nombre] ?: "yoga_default"
+        try {
+            val bitmap = cargarImagenYogaDesdeAssets(nombreImagen)
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap)
+            } else {
+                // Si no hay imagen, usar un icono o color de fondo
+                imageView.setImageResource(android.R.drawable.ic_menu_gallery)
+                imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+        } catch (e: Exception) {
+            // Si falla, usar un icono por defecto
+            imageView.setImageResource(android.R.drawable.ic_menu_gallery)
+            imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        }
+        
+        // Contenedor para el texto (vertical)
+        val textContainer = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
         }
         
         // Texto del ejercicio
@@ -523,11 +708,10 @@ class SaludFisicaContentFragment : Fragment() {
             text = nombre
             textSize = 16f
             setTextColor(android.graphics.Color.parseColor("#000000"))
-            setTypeface(null, android.graphics.Typeface.NORMAL)
+            setTypeface(null, android.graphics.Typeface.BOLD)
             layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
             )
         }
         
@@ -536,17 +720,53 @@ class SaludFisicaContentFragment : Fragment() {
             text = duracion
             textSize = 14f
             setTextColor(android.graphics.Color.parseColor("#666666"))
-            gravity = android.view.Gravity.END
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+            ).apply {
+                setMargins(0, 4, 0, 0)
+            }
         }
         
-        card.addView(textNombre)
-        card.addView(textDuracion)
+        textContainer.addView(textNombre)
+        textContainer.addView(textDuracion)
+        
+        cardContent.addView(imageView)
+        cardContent.addView(textContainer)
+        card.addView(cardContent)
         
         return card
+    }
+    
+    private fun cargarImagenYogaDesdeAssets(nombreImagen: String): android.graphics.Bitmap? {
+        // Intentar cargar la imagen desde assets/imagenes_yoga
+        // Probar diferentes extensiones comunes
+        val extensiones = listOf(".png", ".jpg", ".jpeg", ".webp")
+        
+        for (ext in extensiones) {
+            try {
+                val inputStream = requireContext().assets.open("imagenes_yoga/$nombreImagen$ext")
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream.close()
+                return bitmap
+            } catch (e: IOException) {
+                // Continuar con la siguiente extensión
+            }
+        }
+        
+        // Si no se encontró en imagenes_yoga, intentar en imagenes_entrenamientos
+        for (ext in extensiones) {
+            try {
+                val inputStream = requireContext().assets.open("imagenes_entrenamientos/$nombreImagen$ext")
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream.close()
+                return bitmap
+            } catch (e: IOException) {
+                // Continuar con la siguiente extensión
+            }
+        }
+        
+        return null
     }
     
     private fun navigateToEjercicioYogaIndividual(nombreEjercicio: String, duracion: String) {

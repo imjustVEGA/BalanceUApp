@@ -1,0 +1,160 @@
+INSTRUCCIONES PARA AGREGAR GIFs DE EJERCICIOS
+==============================================
+
+UBICACIÓN:
+----------
+Coloca los archivos GIF en esta carpeta: assets/gifs_ejercicios/
+
+NOMBRES DE ARCHIVOS:
+--------------------
+Los GIFs deben nombrarse según el nombre normalizado del ejercicio.
+
+Ejemplos:
+- flexiones.gif
+- sentadillas.gif
+- plancha.gif
+- burpees.gif
+- mountain_climbers.gif
+- jumping_jacks.gif
+- curl_de_biceps.gif
+- press_de_hombros.gif
+
+REGLAS DE NOMBRES:
+------------------
+1. Todo en minúsculas
+2. Sin acentos (á -> a, é -> e, í -> i, ó -> o, ú -> u)
+3. Sin la letra ñ (reemplazar por n)
+4. Espacios reemplazados por guiones bajos (_)
+5. Sin paréntesis ni caracteres especiales
+6. Sin "cada lado" o variaciones similares
+
+EJERCICIOS COMPARTIDOS:
+-----------------------
+Si un ejercicio aparece en múltiples categorías (ej: "Flexiones" en "Torso" y "Sin equipamiento"),
+solo necesitas UN GIF con el nombre normalizado. El sistema lo usará para todas las categorías.
+
+LISTA DE EJERCICIOS PRINCIPALES:
+---------------------------------
+Torso:
+- flexiones.gif
+- plancha.gif
+- fondos_de_triceps.gif
+- remo_con_peso_corporal.gif
+- abdominales.gif
+- flexiones_inclinadas.gif
+- plancha_lateral.gif
+- superman.gif
+- mountain_climbers.gif
+- burpees.gif
+- flexiones_diamante.gif
+- plancha_con_elevacion_de_pierna.gif
+- abdominales_bicicleta.gif
+- flexiones_con_palmada.gif
+- plancha_con_toque_de_hombro.gif
+
+Piernas:
+- sentadillas.gif
+- zancadas.gif
+- elevaciones_de_talon.gif
+- sentadilla_sumo.gif
+- estocadas_laterales.gif
+- sentadillas_con_salto.gif
+- zancadas_alternas.gif
+- elevaciones_de_pierna_lateral.gif
+- pistol_squat.gif
+- wall_sit.gif
+- step_ups.gif
+- glute_bridge.gif
+
+Fuerza:
+- press_de_banca.gif
+- peso_muerto.gif
+- sentadillas_con_peso.gif
+- press_militar.gif
+- remo_con_barra.gif
+- press_inclinado.gif
+- peso_muerto_rumano.gif
+- sentadillas_frontales.gif
+- press_de_hombros_con_barra.gif
+- remo_t.gif
+- curl_de_biceps_con_barra.gif
+- extensiones_de_triceps.gif
+- press_de_piernas.gif
+- prensa_de_pecho.gif
+- jalones_al_pecho.gif
+- elevaciones_laterales.gif
+- curl_martillo.gif
+- fondos_en_paralelas.gif
+
+Cardio:
+- burpees.gif l
+- mountain_climbers.gif l
+- jumping_jacks.gif l
+- high_knees.gif
+- jump_squats.gif
+- correr_en_el_lugar.gif
+- escaladores.gif
+- saltos_de_tijera.gif
+- burpees_sin_flexion.gif
+- skipping.gif
+
+Sin Equipamiento:
+- flexiones.gif (compartido con Torso)
+- sentadillas.gif (compartido con Piernas)
+- plancha.gif (compartido con Torso)
+- abdominales.gif (compartido con Torso)
+- burpees.gif (compartido con Cardio)
+- mountain_climbers.gif (compartido con Cardio)
+- jumping_jacks.gif (compartido con Cardio)
+- zancadas.gif (compartido con Piernas)
+- plancha_lateral.gif (compartido con Torso)
+- flexiones_diamante.gif (compartido con Torso)
+- sentadillas_con_salto.gif (compartido con Piernas)
+- abdominales_bicicleta.gif (compartido con Torso)
+- superman.gif (compartido con Torso)
+- wall_sit.gif (compartido con Piernas)
+- high_knees.gif (compartido con Cardio)
+- glute_bridge.gif (compartido con Piernas)
+- estocadas_laterales.gif (compartido con Piernas)
+- flexiones_inclinadas.gif (compartido con Torso)
+- jump_squats.gif (compartido con Cardio)
+- plancha_con_toque_de_hombro.gif (compartido con Torso)
+
+Con Pesas:
+- curl_de_biceps.gif
+- press_de_hombros.gif
+- sentadillas_con_pesas.gif
+- remo_con_pesas.gif
+- elevaciones_laterales.gif
+- press_de_banca_con_mancuernas.gif
+- zancadas_con_pesas.gif
+- curl_martillo.gif
+- extensiones_de_triceps.gif
+- peso_muerto_con_mancuernas.gif
+- elevaciones_frontales.gif
+- remo_inclinado.gif
+- press_frances.gif
+- sentadillas_goblet.gif
+
+Yoga:
+- postura_de_la_montana.gif
+- saludo_al_sol.gif
+- postura_del_guerrero_i.gif
+- postura_del_guerrero_ii.gif
+- postura_del_arbol.gif
+- postura_del_perro_boca_abajo.gif
+- postura_del_nino.gif
+- postura_de_la_cobra.gif
+- postura_del_puente.gif
+- postura_de_la_torsion_sentada.gif
+- postura_del_triangulo.gif
+- postura_del_cadaver.gif
+
+NOTAS IMPORTANTES:
+------------------
+- Los GIFs deben estar en formato .gif
+- El sistema buscará automáticamente el GIF basándose en el nombre del ejercicio
+- Si un ejercicio no tiene GIF, simplemente no se mostrará (no causará error)
+- Los ejercicios con el mismo nombre usarán el mismo GIF automáticamente
+
+

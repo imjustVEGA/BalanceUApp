@@ -62,6 +62,9 @@ dependencies {
 
     implementation(libs.com.github.philjay.mpandroidchart)
     implementation(libs.com.google.code.gson)
+    
+    // Glide para cargar GIFs
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,0 +1,99 @@
+═══════════════════════════════════════════════════════════════════════════════
+ESTRUCTURA DE CARPETAS PARA IMÁGENES DE EJERCICIOS
+═══════════════════════════════════════════════════════════════════════════════
+
+Las imágenes se organizan por CATEGORÍA DE ENTRENAMIENTO.
+
+ESTRUCTURA:
+-----------
+ejercicios/
+  ├── torso/
+  │   ├── flexiones.png
+  │   ├── plancha.png
+  │   ├── abdominales.png
+  │   └── ... (todos los ejercicios de torso)
+  │
+  ├── piernas/
+  │   ├── sentadillas.png
+  │   ├── zancadas.png
+  │   └── ... (todos los ejercicios de piernas)
+  │
+  ├── fuerza/
+  │   ├── press_de_banca.png
+  │   ├── peso_muerto.png
+  │   └── ... (todos los ejercicios de fuerza)
+  │
+  ├── cardio/
+  │   ├── burpees.png
+  │   ├── jumping_jacks.png
+  │   └── ... (todos los ejercicios de cardio)
+  │
+  ├── sin_equipamiento/
+  │   ├── flexiones.png
+  │   ├── sentadillas.png
+  │   └── ... (todos los ejercicios sin equipamiento)
+  │
+  ├── con_pesas/
+  │   ├── curl_de_biceps.png
+  │   ├── press_de_hombros.png
+  │   └── ... (todos los ejercicios con pesas)
+  │
+  └── yoga/
+      ├── postura_de_la_montana.png
+      ├── saludo_al_sol.png
+      └── ... (todos los ejercicios de yoga)
+
+═══════════════════════════════════════════════════════════════════════════════
+NOMBRES DE ARCHIVOS:
+═══════════════════════════════════════════════════════════════════════════════
+
+Para cada ejercicio, el archivo debe tener el nombre del ejercicio (sin espacios, sin acentos):
+
+Ejemplos:
+- "Flexiones" → flexiones.png
+- "Postura de la montaña" → postura_de_la_montana.png
+- "Press de banca" → press_de_banca.png
+- "Curl de bíceps" → curl_de_biceps.png
+
+También puedes usar nombres genéricos:
+- imagen.png
+- image.png
+- foto.png
+- photo.png
+
+═══════════════════════════════════════════════════════════════════════════════
+FORMATOS ACEPTADOS:
+═══════════════════════════════════════════════════════════════════════════════
+
+- .png
+- .jpg
+- .jpeg
+- .webp
+
+═══════════════════════════════════════════════════════════════════════════════
+EJEMPLOS COMPLETOS:
+═══════════════════════════════════════════════════════════════════════════════
+
+Para el ejercicio "Flexiones" en la categoría TORSO:
+  ejercicios/torso/flexiones.png
+
+Para el ejercicio "Sentadillas" en la categoría PIERNAS:
+  ejercicios/piernas/sentadillas.png
+
+Para el ejercicio "Postura de la montaña" en la categoría YOGA:
+  ejercicios/yoga/postura_de_la_montana.png
+
+═══════════════════════════════════════════════════════════════════════════════
+NOTAS IMPORTANTES:
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Las carpetas por categoría ya están creadas
+✓ Coloca todas las imágenes de cada categoría en su carpeta correspondiente
+✓ Los nombres de archivo deben estar en minúsculas
+✓ Sin espacios (usar guiones bajos _)
+✓ Sin acentos (á→a, é→e, í→i, ó→o, ú→u, ñ→n)
+✓ La imagen se ajustará automáticamente para que quepa completamente
+
+═══════════════════════════════════════════════════════════════════════════════
+
+

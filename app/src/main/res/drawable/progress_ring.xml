@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo del anillo -->
+    <item>
+        <shape
+            android:shape="ring"
+            android:innerRadiusRatio="3.2"
+            android:thicknessRatio="12"
+            android:useLevel="false">
+            <solid android:color="@color/background_soft" />
+        </shape>
+    </item>
+    <!-- Progreso del anillo -->
+    <item>
+        <shape
+            android:shape="ring"
+            android:innerRadiusRatio="3.2"
+            android:thicknessRatio="12"
+            android:useLevel="true">
+            <solid android:color="@color/text_primary" />
+        </shape>
+    </item>
+</layer-list>
+

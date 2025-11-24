@@ -1,15 +1,18 @@
 package com.example.balanceuapp.ui.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.balanceuapp.R
+import java.io.IOException
 
 class EjerciciosDetalleFragment : Fragment() {
     
@@ -78,6 +81,9 @@ class EjerciciosDetalleFragment : Fragment() {
         
         // Mostrar ejercicios
         mostrarEjercicios(view, ejercicios)
+        
+        // Cargar imagen del ejercicio en el header
+        cargarImagenHeaderEjercicio(view, title ?: "")
         
         // Botones
         view.findViewById<Button>(R.id.buttonIniciar)?.setOnClickListener {
@@ -206,8 +212,156 @@ class EjerciciosDetalleFragment : Fragment() {
             ejercicioView.findViewById<TextView>(R.id.textNombreEjercicio)?.text = ejercicio.nombre
             ejercicioView.findViewById<TextView>(R.id.textDuracionEjercicio)?.text = ejercicio.duracion
             
+            // Cargar imagen del ejercicio desde la carpeta de su categoría
+            val imageView = ejercicioView.findViewById<ImageView>(R.id.imageEjercicio)
+            imageView?.let { img ->
+                // Aplicar bordes redondeados
+                val radius = 8f * resources.displayMetrics.density
+                val shape = android.graphics.drawable.GradientDrawable().apply {
+                    setCornerRadius(radius)
+                    setColor(android.graphics.Color.parseColor("#E0E0E0"))
+                }
+                img.background = shape
+                img.clipToOutline = true
+                
+                // Ajustar la imagen para que quepa completamente
+                img.scaleType = ImageView.ScaleType.FIT_CENTER
+                img.adjustViewBounds = true
+                
+                // Cargar imagen desde la carpeta de la categoría del entrenamiento
+                val bitmap = cargarImagenEjercicioDesdeCarpeta(ejercicio.nombre, title ?: "")
+                if (bitmap != null) {
+                    img.setImageBitmap(bitmap)
+                } else {
+                    // Si no hay imagen, mantener el fondo gris
+                    img.setImageDrawable(null)
+                }
+            }
+            
             containerEjercicios?.addView(ejercicioView)
         }
+    }
+    
+    private fun ejercicioTieneImagen(nombreEjercicio: String, tipoRutina: String): Boolean {
+        val context = context ?: return false
+        
+        val carpetaCategoria = when (tipoRutina.lowercase()) {
+            "torso" -> "torso"
+            "piernas" -> "piernas"
+            "fuerza" -> "fuerza"
+            "cardio" -> "cardio"
+            "sin equipamiento" -> "sin_equipamiento"
+            "con pesas" -> "con_pesas"
+            "yoga" -> "yoga"
+            else -> {
+                when {
+                    tipoRutina.lowercase().contains("torso") -> "torso"
+                    tipoRutina.lowercase().contains("pierna") -> "piernas"
+                    tipoRutina.lowercase().contains("fuerza") -> "fuerza"
+                    tipoRutina.lowercase().contains("cardio") -> "cardio"
+                    tipoRutina.lowercase().contains("equipamiento") -> "sin_equipamiento"
+                    tipoRutina.lowercase().contains("pesa") -> "con_pesas"
+                    tipoRutina.lowercase().contains("yoga") || tipoRutina.lowercase().contains("postura") -> "yoga"
+                    else -> null
+                }
+            }
+        }
+        
+        if (carpetaCategoria == null) {
+            return false
+        }
+        
+        val nombreArchivo = nombreEjercicio.lowercase()
+            .replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+            .replace("ñ", "n").replace("ü", "u")
+            .replace(" ", "_")
+            .replace("cada lado", "")
+            .replace("(", "").replace(")", "")
+            .replace("__", "_")
+            .trim()
+        
+        val extensiones = listOf(".png", ".jpg", ".jpeg", ".webp")
+        val nombresArchivo = listOf(nombreArchivo, "imagen", "image", "foto", "photo")
+        
+        for (nombreArch in nombresArchivo) {
+            for (ext in extensiones) {
+                try {
+                    val ruta = "ejercicios/$carpetaCategoria/$nombreArch$ext"
+                    context.assets.open(ruta).use { 
+                        return true 
+                    }
+                } catch (e: IOException) {
+                    // Continuar con el siguiente nombre o extensión
+                }
+            }
+        }
+        return false
+    }
+    
+    private fun cargarImagenEjercicioDesdeCarpeta(nombreEjercicio: String, tipoRutina: String): android.graphics.Bitmap? {
+        // Determinar la carpeta de categoría según el tipo de rutina
+        val carpetaCategoria = when (tipoRutina.lowercase()) {
+            "torso" -> "torso"
+            "piernas" -> "piernas"
+            "fuerza" -> "fuerza"
+            "cardio" -> "cardio"
+            "sin equipamiento" -> "sin_equipamiento"
+            "con pesas" -> "con_pesas"
+            "yoga" -> "yoga"
+            else -> {
+                // Si no coincide exactamente, buscar por palabras clave
+                when {
+                    tipoRutina.lowercase().contains("torso") -> "torso"
+                    tipoRutina.lowercase().contains("pierna") -> "piernas"
+                    tipoRutina.lowercase().contains("fuerza") -> "fuerza"
+                    tipoRutina.lowercase().contains("cardio") -> "cardio"
+                    tipoRutina.lowercase().contains("equipamiento") -> "sin_equipamiento"
+                    tipoRutina.lowercase().contains("pesa") -> "con_pesas"
+                    tipoRutina.lowercase().contains("yoga") || tipoRutina.lowercase().contains("postura") -> "yoga"
+                    else -> null
+                }
+            }
+        }
+        
+        if (carpetaCategoria == null) {
+            return null
+        }
+        
+        // Crear nombre de archivo limpio para el ejercicio
+        val nombreArchivo = nombreEjercicio.lowercase()
+            .replace("á", "a")
+            .replace("é", "e")
+            .replace("í", "i")
+            .replace("ó", "o")
+            .replace("ú", "u")
+            .replace("ñ", "n")
+            .replace("ü", "u")
+            .replace(" ", "_")
+            .replace("cada lado", "")
+            .replace("(", "")
+            .replace(")", "")
+            .replace("__", "_")
+            .trim()
+        
+        // Buscar imagen en la carpeta de la categoría: ejercicios/[categoria]/[nombre_ejercicio].png
+        val extensiones = listOf(".png", ".jpg", ".jpeg", ".webp")
+        val nombresArchivo = listOf(nombreArchivo, "imagen", "image", "foto", "photo")
+        
+        for (nombreArch in nombresArchivo) {
+            for (ext in extensiones) {
+                try {
+                    val ruta = "ejercicios/$carpetaCategoria/$nombreArch$ext"
+                    val inputStream = requireContext().assets.open(ruta)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    inputStream.close()
+                    return bitmap
+                } catch (e: IOException) {
+                    // Continuar con el siguiente nombre o extensión
+                }
+            }
+        }
+        
+        return null
     }
     
     private fun calcularDuracionTotal(ejercicios: List<Ejercicio>): Int {
@@ -241,7 +395,7 @@ class EjerciciosDetalleFragment : Fragment() {
     }
     
     private fun generarEjercicios(tipoRutina: String): List<Ejercicio> {
-        return when (tipoRutina.lowercase()) {
+        val todosEjercicios = when (tipoRutina.lowercase()) {
             "torso" -> listOf(
                 crearEjercicio("Flexiones", "30 seg", "Realiza flexiones manteniendo el cuerpo recto", 30),
                 crearEjercicio("Plancha", "45 seg", "Mantén la posición de plancha con el cuerpo recto", 45),
@@ -402,6 +556,85 @@ class EjerciciosDetalleFragment : Fragment() {
                         crearEjercicio("Ejercicio principal", "30 seg", "Realiza el ejercicio principal de la rutina", 30),
                         crearEjercicio("Estiramiento", "5 min", "Estira los músculos trabajados", 300)
                     )
+                }
+            }
+        }
+        
+        // Filtrar solo los ejercicios que tienen imágenes
+        return todosEjercicios.filter { ejercicio ->
+            ejercicioTieneImagen(ejercicio.nombre, tipoRutina)
+        }
+    }
+    
+    private fun cargarImagenHeaderEjercicio(view: View, tipoRutina: String) {
+        val imageView = view.findViewById<ImageView>(R.id.imageEjercicioHeader)
+        imageView?.let { img ->
+            // Determinar la carpeta de categoría según el tipo de rutina
+            val carpetaCategoria = when (tipoRutina.lowercase()) {
+                "torso" -> "torso"
+                "piernas" -> "piernas"
+                "fuerza" -> "fuerza"
+                "cardio" -> "cardio"
+                "sin equipamiento" -> "sin_equipamiento"
+                "con pesas" -> "con_pesas"
+                "yoga" -> "yoga"
+                else -> {
+                    when {
+                        tipoRutina.lowercase().contains("torso") -> "torso"
+                        tipoRutina.lowercase().contains("pierna") -> "piernas"
+                        tipoRutina.lowercase().contains("fuerza") -> "fuerza"
+                        tipoRutina.lowercase().contains("cardio") -> "cardio"
+                        tipoRutina.lowercase().contains("equipamiento") -> "sin_equipamiento"
+                        tipoRutina.lowercase().contains("pesa") -> "con_pesas"
+                        tipoRutina.lowercase().contains("yoga") || tipoRutina.lowercase().contains("postura") -> "yoga"
+                        else -> null
+                    }
+                }
+            }
+            
+            if (carpetaCategoria != null) {
+                // Intentar cargar una imagen representativa de la categoría
+                // Primero intentar con el nombre de la categoría en imagenes_entrenamientos
+                val nombresImagen = listOf(
+                    "imagen_$carpetaCategoria",
+                    carpetaCategoria,
+                    "header_$carpetaCategoria"
+                )
+                
+                val extensiones = listOf(".png", ".jpg", ".jpeg", ".webp")
+                var imagenCargada = false
+                
+                // Buscar en imagenes_entrenamientos primero
+                for (nombreImagen in nombresImagen) {
+                    for (ext in extensiones) {
+                        try {
+                            val ruta = "imagenes_entrenamientos/$nombreImagen$ext"
+                            val inputStream = requireContext().assets.open(ruta)
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
+                            inputStream.close()
+                            if (bitmap != null) {
+                                img.setImageBitmap(bitmap)
+                                imagenCargada = true
+                                break
+                            }
+                        } catch (e: IOException) {
+                            // Continuar con el siguiente nombre o extensión
+                        }
+                    }
+                    if (imagenCargada) break
+                }
+                
+                // Si no se encontró imagen de la categoría, intentar con el primer ejercicio
+                if (!imagenCargada) {
+                    val ejercicios = generarEjercicios(tipoRutina)
+                    if (ejercicios.isNotEmpty()) {
+                        val primerEjercicio = ejercicios.first()
+                        val bitmap = cargarImagenEjercicioDesdeCarpeta(primerEjercicio.nombre, tipoRutina)
+                        if (bitmap != null) {
+                            img.setImageBitmap(bitmap)
+                            imagenCargada = true
+                        }
+                    }
                 }
             }
         }

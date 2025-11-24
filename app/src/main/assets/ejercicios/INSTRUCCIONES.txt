@@ -1,0 +1,57 @@
+═══════════════════════════════════════════════════════════════════════════════
+INSTRUCCIONES PARA AGREGAR IMÁGENES DE EJERCICIOS
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ TODAS LAS CARPETAS YA ESTÁN CREADAS AUTOMÁTICAMENTE
+
+Ahora solo necesitas agregar las imágenes en cada carpeta.
+
+═══════════════════════════════════════════════════════════════════════════════
+PASOS A SEGUIR:
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Ve a la carpeta: app/src/main/assets/ejercicios/
+
+2. Dentro de cada carpeta de ejercicio, coloca la imagen con el nombre:
+   - imagen.png
+   - imagen.jpg
+   - imagen.jpeg
+   - imagen.webp
+   
+   (Cualquiera de estos nombres funciona)
+
+3. La imagen se ajustará automáticamente para que quepa completamente
+
+═══════════════════════════════════════════════════════════════════════════════
+EJEMPLO:
+═══════════════════════════════════════════════════════════════════════════════
+
+Para el ejercicio "Flexiones":
+  📁 ejercicios/
+     📁 flexiones/
+        🖼️ imagen.png  ← Coloca tu imagen aquí
+
+Para el ejercicio "Postura de la montaña":
+  📁 ejercicios/
+     📁 postura_de_la_montana/
+        🖼️ imagen.png  ← Coloca tu imagen aquí
+
+═══════════════════════════════════════════════════════════════════════════════
+NOTAS IMPORTANTES:
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Si no agregas una imagen, se mostrará un fondo gris
+✓ Puedes usar cualquier formato: PNG, JPG, JPEG, WEBP
+✓ La imagen se ajustará automáticamente para que quepa completa
+✓ No es necesario que todas las imágenes tengan el mismo tamaño
+
+═══════════════════════════════════════════════════════════════════════════════
+VER LISTA COMPLETA:
+═══════════════════════════════════════════════════════════════════════════════
+
+Abre el archivo: LISTA_IMAGENES_POR_ENTRENAMIENTO.txt
+para ver todos los ejercicios organizados por categoría.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+

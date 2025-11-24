@@ -19,9 +19,6 @@ import com.example.balanceuapp.databinding.ItemEstadoAnimoBinding
 import com.example.balanceuapp.ui.auth.AuthActivity
 import com.example.balanceuapp.ui.viewmodel.AuthViewModel
 import com.example.balanceuapp.ui.viewmodel.EstadisticasViewModel
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -54,7 +51,16 @@ class PerfilFragment : Fragment() {
         setupListeners()
         setupListaEstadosAnimo()
         setupObservers()
-        cargarDatosEstadisticos()
+        
+        // Cargar solo estados de ánimo
+        val userId = authViewModel.obtenerUsuarioActual()
+        if (userId != null) {
+            val calendar = Calendar.getInstance()
+            val fechaFin = calendar.timeInMillis
+            calendar.add(Calendar.DAY_OF_MONTH, -30)
+            val fechaInicio = calendar.timeInMillis
+            estadisticasViewModel.cargarDatosEstadisticos(userId, fechaInicio, fechaFin)
+        }
     }
 
     private fun setupUserInfo() {
@@ -89,66 +95,8 @@ class PerfilFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        estadisticasViewModel.habitos.observe(viewLifecycleOwner) { habitos ->
-            actualizarGraficaHabitos(habitos)
-        }
-
         estadisticasViewModel.estadosAnimo.observe(viewLifecycleOwner) { estados ->
             actualizarListaEstadosAnimo(estados)
-        }
-    }
-
-    private fun cargarDatosEstadisticos() {
-        val userId = authViewModel.obtenerUsuarioActual()
-        if (userId != null) {
-            val calendar = Calendar.getInstance()
-            val fechaFin = calendar.timeInMillis
-            calendar.add(Calendar.DAY_OF_MONTH, -30)
-            val fechaInicio = calendar.timeInMillis
-
-            estadisticasViewModel.cargarDatosEstadisticos(userId, fechaInicio, fechaFin)
-        }
-    }
-
-    private fun actualizarGraficaHabitos(habitos: List<com.example.balanceuapp.data.model.Habito>) {
-        try {
-            if (habitos.isEmpty()) {
-                binding.pieChartHabitos.clear()
-                binding.pieChartHabitos.data = null
-                binding.pieChartHabitos.setNoDataText("Sin datos")
-                binding.pieChartHabitos.description.isEnabled = false
-                binding.pieChartHabitos.legend.isEnabled = false
-                binding.pieChartHabitos.invalidate()
-                return
-            }
-
-            val completados = habitos.count { it.completado }
-            val noCompletados = habitos.size - completados
-
-            val entries = mutableListOf<PieEntry>()
-            if (completados > 0) {
-                entries.add(PieEntry(completados.toFloat(), "Completados"))
-            }
-            if (noCompletados > 0) {
-                entries.add(PieEntry(noCompletados.toFloat(), "Pendientes"))
-            }
-
-            val dataSet = PieDataSet(entries, "Hábitos")
-            dataSet.colors = listOf(
-                Color.parseColor("#A5D6A7"),
-                Color.parseColor("#FFB74D"),
-                Color.parseColor("#BDBDBD")
-            )
-            dataSet.valueTextSize = 12f
-            dataSet.valueTextColor = Color.parseColor("#424242")
-
-            val pieData = PieData(dataSet)
-            binding.pieChartHabitos.data = pieData
-            binding.pieChartHabitos.description.isEnabled = false
-            binding.pieChartHabitos.legend.isEnabled = true
-            binding.pieChartHabitos.invalidate()
-        } catch (e: Exception) {
-            android.util.Log.e("PerfilFragment", "Error al actualizar gráfica de hábitos: ${e.message}", e)
         }
     }
 

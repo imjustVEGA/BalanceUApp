@@ -19,12 +19,17 @@
         android:layout_marginEnd="16dp"
         android:contentDescription="Reordenar" />
 
-    <!-- Ilustración del ejercicio (placeholder) -->
-    <View
+    <!-- Ilustración del ejercicio -->
+    <ImageView
+        android:id="@+id/imageEjercicio"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="#E0E0E0"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Imagen del ejercicio"
+        android:clipToOutline="true" />
 
     <!-- Información del ejercicio -->
     <LinearLayout

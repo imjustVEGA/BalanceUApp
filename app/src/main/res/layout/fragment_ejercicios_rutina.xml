@@ -7,23 +7,40 @@
 
     <!-- Área superior con ilustración/video -->
     <FrameLayout
+        android:id="@+id/containerMedia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/bottomSection"
         android:background="#F5F5F5">
+
+        <!-- Placeholder para ilustración (se oculta cuando hay GIF) -->
+        <View
+            android:id="@+id/illustrationPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8"
+            android:visibility="gone" />
+
+        <!-- ImageView para GIF del ejercicio - DEBE ESTAR VISIBLE -->
+        <ImageView
+            android:id="@+id/imageViewGif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:contentDescription="GIF del ejercicio"
+            android:visibility="visible"
+            android:importantForAccessibility="yes"
+            android:background="#F5F5F5"
+            android:src="@android:drawable/ic_menu_view"
+            android:minHeight="200dp"
+            android:padding="16dp" />
 
         <VideoView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
-
-        <!-- Placeholder para ilustración -->
-        <View
-            android:id="@+id/illustrationPlaceholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#E8E8E8" />
 
         <!-- Controles superiores -->
         <LinearLayout
@@ -145,6 +162,17 @@
                 android:letterSpacing="0.05" />
 
         </LinearLayout>
+
+        <!-- Instrucciones del ejercicio -->
+        <TextView
+            android:id="@+id/textInstrucciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instrucciones del ejercicio"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:paddingBottom="16dp"
+            android:lineSpacingMultiplier="1.2" />
 
         <!-- Contenedor del Timer (para ejercicios por tiempo) -->
         <LinearLayout

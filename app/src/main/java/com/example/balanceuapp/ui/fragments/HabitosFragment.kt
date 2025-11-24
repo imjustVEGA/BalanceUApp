@@ -85,13 +85,51 @@ class HabitosFragment : Fragment() {
             val isEmpty = habitos.isEmpty()
             binding.emptyStateLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
             binding.rvHabitos.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            
+            // Actualizar progreso circular cuando cambian los hábitos
+            actualizarProgresoCircular(habitos)
         }
-
+        
         habitoViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    
+    private fun actualizarProgresoCircular(habitos: List<Habito>) {
+        if (habitos.isEmpty()) {
+            binding.progressCircularHabitos.progress = 0
+            binding.tvPorcentajeProgreso.text = "0%"
+            binding.tvCompletados.text = "0/0 completados"
+            return
+        }
+
+        val total = habitos.size
+        val completados = habitos.count { it.completado }
+        val porcentaje = if (total > 0) {
+            (completados * 100 / total).coerceIn(0, 100)
+        } else {
+            0
+        }
+
+        // Obtener el progreso actual
+        val progresoActual = binding.progressCircularHabitos.progress
+        
+        // Animar el cambio de progreso
+        val animacion = android.animation.ObjectAnimator.ofInt(
+            binding.progressCircularHabitos,
+            "progress",
+            progresoActual,
+            porcentaje
+        )
+        animacion.duration = 500 // 500ms de animación
+        animacion.setInterpolator(android.view.animation.DecelerateInterpolator())
+        animacion.start()
+        
+        // Actualizar textos
+        binding.tvPorcentajeProgreso.text = "$porcentaje%"
+        binding.tvCompletados.text = "$completados/$total completados"
     }
 
     private fun mostrarDialogoHabito(habito: Habito? = null) {

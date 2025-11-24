@@ -1,0 +1,162 @@
+═══════════════════════════════════════════════════════════════════════════════
+LISTA COMPLETA DE IMÁGENES POR ENTRENAMIENTO
+═══════════════════════════════════════════════════════════════════════════════
+
+ESTRUCTURA: ejercicios/[categoria]/[nombre_ejercicio].png
+
+═══════════════════════════════════════════════════════════════════════════════
+1. TORSO - Carpeta: ejercicios/torso/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/torso/flexiones.png
+ejercicios/torso/plancha.png
+ejercicios/torso/fondos_de_triceps.png
+ejercicios/torso/remo_con_peso_corporal.png
+ejercicios/torso/abdominales.png
+ejercicios/torso/flexiones_inclinadas.png
+ejercicios/torso/plancha_lateral.png
+ejercicios/torso/superman.png
+ejercicios/torso/mountain_climbers.png
+ejercicios/torso/burpees.png
+ejercicios/torso/flexiones_diamante.png
+ejercicios/torso/plancha_con_elevacion_de_pierna.png
+ejercicios/torso/abdominales_bicicleta.png
+ejercicios/torso/flexiones_con_palmada.png
+ejercicios/torso/plancha_con_toque_de_hombro.png
+
+═══════════════════════════════════════════════════════════════════════════════
+2. PIERNAS - Carpeta: ejercicios/piernas/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/piernas/sentadillas.png
+ejercicios/piernas/zancadas.png
+ejercicios/piernas/elevaciones_de_talon.png
+ejercicios/piernas/sentadilla_sumo.png
+ejercicios/piernas/estocadas_laterales.png
+ejercicios/piernas/sentadillas_con_salto.png
+ejercicios/piernas/zancadas_alternas.png
+ejercicios/piernas/elevaciones_de_pierna_lateral.png
+ejercicios/piernas/pistol_squat.png
+ejercicios/piernas/wall_sit.png
+ejercicios/piernas/step_ups.png
+ejercicios/piernas/glute_bridge.png
+
+═══════════════════════════════════════════════════════════════════════════════
+3. FUERZA - Carpeta: ejercicios/fuerza/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/fuerza/press_de_banca.png
+ejercicios/fuerza/peso_muerto.png
+ejercicios/fuerza/sentadillas_con_peso.png
+ejercicios/fuerza/press_militar.png
+ejercicios/fuerza/remo_con_barra.png
+ejercicios/fuerza/press_inclinado.png
+ejercicios/fuerza/peso_muerto_rumano.png
+ejercicios/fuerza/sentadillas_frontales.png
+ejercicios/fuerza/press_de_hombros_con_barra.png
+ejercicios/fuerza/remo_t.png
+ejercicios/fuerza/curl_de_biceps_con_barra.png
+ejercicios/fuerza/extensiones_de_triceps.png
+ejercicios/fuerza/press_de_piernas.png
+ejercicios/fuerza/prensa_de_pecho.png
+ejercicios/fuerza/jalones_al_pecho.png
+ejercicios/fuerza/elevaciones_laterales.png
+ejercicios/fuerza/curl_martillo.png
+ejercicios/fuerza/fondos_en_paralelas.png
+
+═══════════════════════════════════════════════════════════════════════════════
+4. CARDIO - Carpeta: ejercicios/cardio/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/cardio/burpees.png
+ejercicios/cardio/mountain_climbers.png
+ejercicios/cardio/jumping_jacks.png
+ejercicios/cardio/high_knees.png
+ejercicios/cardio/jump_squats.png
+ejercicios/cardio/correr_en_el_lugar.png
+ejercicios/cardio/escaladores.png
+ejercicios/cardio/saltos_de_tijera.png
+ejercicios/cardio/burpees_sin_flexion.png
+ejercicios/cardio/skipping.png
+
+═══════════════════════════════════════════════════════════════════════════════
+5. SIN EQUIPAMIENTO - Carpeta: ejercicios/sin_equipamiento/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/sin_equipamiento/flexiones.png
+ejercicios/sin_equipamiento/sentadillas.png
+ejercicios/sin_equipamiento/plancha.png
+ejercicios/sin_equipamiento/abdominales.png
+ejercicios/sin_equipamiento/burpees.png
+ejercicios/sin_equipamiento/mountain_climbers.png
+ejercicios/sin_equipamiento/jumping_jacks.png
+ejercicios/sin_equipamiento/zancadas.png
+ejercicios/sin_equipamiento/plancha_lateral.png
+ejercicios/sin_equipamiento/flexiones_diamante.png
+ejercicios/sin_equipamiento/sentadillas_con_salto.png
+ejercicios/sin_equipamiento/abdominales_bicicleta.png
+ejercicios/sin_equipamiento/superman.png
+ejercicios/sin_equipamiento/wall_sit.png
+ejercicios/sin_equipamiento/high_knees.png
+ejercicios/sin_equipamiento/glute_bridge.png
+ejercicios/sin_equipamiento/estocadas_laterales.png
+ejercicios/sin_equipamiento/flexiones_inclinadas.png
+ejercicios/sin_equipamiento/jump_squats.png
+ejercicios/sin_equipamiento/plancha_con_toque_de_hombro.png
+
+═══════════════════════════════════════════════════════════════════════════════
+6. CON PESAS - Carpeta: ejercicios/con_pesas/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/con_pesas/curl_de_biceps.png
+ejercicios/con_pesas/press_de_hombros.png
+ejercicios/con_pesas/sentadillas_con_pesas.png
+ejercicios/con_pesas/remo_con_pesas.png
+ejercicios/con_pesas/elevaciones_laterales.png
+ejercicios/con_pesas/press_de_banca_con_mancuernas.png
+ejercicios/con_pesas/zancadas_con_pesas.png
+ejercicios/con_pesas/curl_martillo.png
+ejercicios/con_pesas/extensiones_de_triceps.png
+ejercicios/con_pesas/peso_muerto_con_mancuernas.png
+ejercicios/con_pesas/elevaciones_frontales.png
+ejercicios/con_pesas/remo_inclinado.png
+ejercicios/con_pesas/press_frances.png
+ejercicios/con_pesas/sentadillas_goblet.png
+
+═══════════════════════════════════════════════════════════════════════════════
+7. YOGA - Carpeta: ejercicios/yoga/
+═══════════════════════════════════════════════════════════════════════════════
+
+ejercicios/yoga/postura_de_la_montana.png
+ejercicios/yoga/saludo_al_sol.png
+ejercicios/yoga/postura_del_guerrero_i.png
+ejercicios/yoga/postura_del_guerrero_ii.png
+ejercicios/yoga/postura_del_arbol.png
+ejercicios/yoga/postura_del_perro_boca_abajo.png
+ejercicios/yoga/postura_del_nino.png
+ejercicios/yoga/postura_de_la_cobra.png
+ejercicios/yoga/postura_del_puente.png
+ejercicios/yoga/postura_de_la_torsion_sentada.png
+ejercicios/yoga/postura_del_triangulo.png
+ejercicios/yoga/postura_del_cadaver.png
+
+═══════════════════════════════════════════════════════════════════════════════
+RESUMEN
+═══════════════════════════════════════════════════════════════════════════════
+
+CARPETAS CREADAS:
+- ejercicios/torso/
+- ejercicios/piernas/
+- ejercicios/fuerza/
+- ejercicios/cardio/
+- ejercicios/sin_equipamiento/
+- ejercicios/con_pesas/
+- ejercicios/yoga/
+
+INSTRUCCIONES:
+1. Ve a cada carpeta de categoría
+2. Coloca las imágenes de los ejercicios con el nombre del ejercicio
+3. Formato: [nombre_ejercicio].png (o .jpg, .jpeg, .webp)
+4. Ejemplo: ejercicios/torso/flexiones.png
+
+═══════════════════════════════════════════════════════════════════════════════
