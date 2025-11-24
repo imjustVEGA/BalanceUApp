@@ -31,10 +31,8 @@
             android:contentDescription="GIF del ejercicio"
             android:visibility="visible"
             android:importantForAccessibility="yes"
-            android:background="#F5F5F5"
-            android:src="@android:drawable/ic_menu_view"
-            android:minHeight="200dp"
-            android:padding="16dp" />
+            android:background="#CCCCCC"
+            android:minHeight="200dp" />
 
         <VideoView
             android:id="@+id/videoView"
